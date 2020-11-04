@@ -1,52 +1,64 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
-    <a class="navbar-brand">ระบบยื่นคำร้องจดทะเบียนล้าช้า</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link">หน้าแรก</router-link>
-        </li>
-        <li class="nav-item ">
-          <a  class="nav-link" href="#" v-if="$store.state.session_login['status'] == true" @click="goEnroll">ดำเนินการลงทะเบียน</a>
-        </li>
-        <li class="nav-item ">
-          <p>{{ data }}</p>
-        </li>
-      </ul>
-      <ul class="navbar-nav  my-2 my-lg-0" >
-        <div>
-          <router-link to="/login" class="nav-link" v-if="!$store.state.session_login['status'] == true"
-          >Login</router-link>
-          <li class="nav-item dropdown" v-else> 
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              คุณ {{ $store.state.userData['displayname_th'] }}
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <!-- <router-link to="/profile" class="dropdown-item">Profile</router-link> -->
-                <a class="dropdown-item" href="#" @click="goProfile">Profile</a>
-                <a class="dropdown-item" href="#">#TEST#</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" @click="logOut">Logout</a>
-              </div>
-            </a>      
-          </li>
-        <!-- <router-link to="/" class="nav-link" v-else @click="logOut">Logout</router-link> -->
-        </div>
-
-      </ul>
+  <v-app-bar color="indigo" dense absolute dark>
+    <div class="d-flex ">
+      <v-toolbar-title class="mr-5">ระบบลงทะเบียนล้าช้า</v-toolbar-title>
     </div>
-  </nav>
+
+    <div>
+      <v-btn @click="goHome" color="indigo" class="mr-5">หน้าแรก</v-btn>
+    </div>
+    <div v-if="$store.state.session_login['status'] == true">
+      <v-btn @click="goHome" color="indigo" class="mr-5">ลงทะเบียนเรียน</v-btn>
+    </div>
+    <div v-if="$store.state.session_login['status'] == true">
+      <v-btn @click="goHome" color="indigo" class="mr-5">ตรวจสอบสถานะดำเนินการ</v-btn>
+    </div>
+      
+      
+
+    <v-spacer></v-spacer>
+
+    <div v-if="$store.state.session_login['status'] == true">
+      <v-text>
+        คุณ {{ $store.state.userData['displayname_th'] }}
+      </v-text>
+      <v-btn icon>
+        <v-menu 
+        left bottom
+        offset-y
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item @click="goProfile">
+              <v-icon class="mr-2">mdi-card-account-details-outline</v-icon>
+              <v-list-item-title>Profile</v-list-item-title>
+            </v-list-item>
+            <v-list-item >
+              <v-list-item-title>comming soon</v-list-item-title>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item @click="logOut">
+              <v-icon class="mr-2">mdi-logout</v-icon>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
+    </div>
+    <div v-else>
+      <v-text>
+        Login
+      </v-text>
+      <v-btn icon @click="goLogin">
+        <v-icon>mdi-login</v-icon>
+      </v-btn>
+    </div>
+  </v-app-bar>
 </template>
 
 <script>
@@ -54,42 +66,60 @@ export default {
   name: "Navbar",
   data() {
     return {
-      
+      drawer: false,
+      group: null
     };
   },
   methods: {
     logOut() {
-      this.$session.clear('login_session')
-      this.$store.state.session_login = ""
-      this.$store.state.userData = ""
-      this.$router.push("Home")
+      this.$session.clear("login_session");
+      this.$store.state.session_login = "";
+      this.$store.state.userData = "";
+      this.$router.push("/");
     },
     goProfile() {
+      this.session_update()
       this.$router.push({
         name: "Profile",
         params: {
-          status: this.$store.state.session_login['status'],
-          username: this.$store.state.session_login['username']
+          status: this.$store.state.session_login["status"],
+          username: this.$store.state.session_login["username"]
         }
-      })
+      });
     },
     goEnroll() {
+      this.session_update()
       this.$router.push({
         name: "Enroll",
         params: {
-          status: this.$store.state.session_login['status'],
-          username: this.$store.state.session_login['username'],
+          status: this.$store.state.session_login["status"],
+          username: this.$store.state.session_login["username"]
           // on_time: //เช็คเวลาเปิดให้ลงทะเบียนกับ backend
         }
-      })
+      });
+    },
+    goLogin() {
+      this.$router.push({
+        name: "Login",
+      });
+    },
+    goHome() {
+      this.$router.push({
+        name: "Home",
+      });
+    },
+    session_update() {
+      let test = this.$session.get("login_session")
+      if(test['status'] == true) {
+        this.$store.state.session_login = this.$session.get("login_session");  
+      } else {
+        this.logOut();
+        this.vm.$forceUpdate();
+      }
     }
   },
-  mounted: {
-     
-  },
-  watch: {
-
-  }
+  mounted: {},
+  watch: {}
 };
 </script>
 

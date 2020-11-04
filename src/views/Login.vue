@@ -26,16 +26,24 @@
           v-model="login_data['password']"
         />
       </div>
-      <div class="alert alert-danger" role="alert" v-if='this.$store.state.userData["status"] == "FALSE"'>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        v-if="this.$store.state.userData['status'] == 'FALSE'"
+      >
         {{ this.$store.state.userData["message"] }}
-    	</div>
+      </div>
       <button type="button" class="btn btn-primary btn-block" @click="authAPI">
         เข้าสู่ระบบ
       </button>
       <p class="text-right">@CSTU</p>
-	  <div class="alert alert-primary" role="alert" v-if='this.$store.state.userData["status"] == true'>
+      <div
+        class="alert alert-primary"
+        role="alert"
+        v-if="this.$store.state.userData['status'] == true"
+      >
         {{ this.$store.state.userData["message"] }}
-    	</div>
+      </div>
     </form>
   </div>
 </template>
@@ -51,28 +59,33 @@ export default {
         username: "",
         password: ""
       },
-      // user_data: this.$store.state.user_data
-
-	  }
+      user_data: this.$store.state.session_login
+    };
   },
-  
+
   methods: {
     async authAPI() {
-    let userData = await axios.post("https://cs264-backend-project.herokuapp.com/api/getUser", this.login_data)
-    console.log(userData.data);
-    this.$store.state.userData = userData.data 
+      let userData = await axios.post(
+        "https://cs264-backend-project.herokuapp.com/api/getUser",
+        this.login_data
+      );
+      console.log(userData.data);
+      this.$store.state.userData = userData.data;
 
-      if(this.$store.state.userData['status'] == true) {
-        this.$router.push("Home")
+      if (this.$store.state.userData["status"] == true) {
+        this.$router.push("/");
         let data = {
-          username : this.$store.state.userData['username'],
-          status : this.$store.state.userData['status']
-        }
-        this.$session.set('login_session', data)
-        this.$store.state.session_login = this.$session.get("login_session")
+          username: this.$store.state.userData["username"],
+          status: this.$store.state.userData["status"]
+        };
+        this.$session.set("login_session", data);
+        this.$store.state.session_login = this.$session.get("login_session");
       }
+    },
+    reloadApp() {
+      this.vm.$forceUpdate();
     }
-  }
+  },
 };
 </script>
 

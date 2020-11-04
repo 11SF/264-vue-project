@@ -8,10 +8,12 @@ export default new Vuex.Store({
     userData: {
       status: ""
     },
-     session_login: ""
+    session_login: ""
   },
   mutations: {
-    
+    updata_session() {
+      this.session_login = this.$session.get("login_session");
+    }
   },
   actions: {},
   modules: {}

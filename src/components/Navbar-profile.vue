@@ -43,8 +43,8 @@ export default {
       session: this.$store.state.session_login,
       islog: false
     };
-  },
-}
+  }
+};
 </script>
 
 <style>

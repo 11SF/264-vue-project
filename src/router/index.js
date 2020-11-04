@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Login from "../views/Login.vue"
-import Profile from "../views/Profile.vue"
-import Enroll from "../views/RegisSubject.vue"
+import Login from "../views/Login.vue";
+import Profile from "../views/Profile.vue";
+import Enroll from "../views/RegisSubject.vue";
 
 Vue.use(VueRouter);
 
@@ -16,8 +16,7 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    component: () =>
-      import("../views/About.vue")
+    component: () => import("../views/About.vue")
   },
   {
     path: "/login",
@@ -29,10 +28,10 @@ const routes = [
     name: "Profile",
     component: Profile,
     beforeEnter: (to, from, next) => {
-      if(to.params.status == true && to.params.username) {
-        next()
+      if (to.params.status == true) {
+        next();
       } else {
-        next({ name: "Home"})
+        next({ name: "Home" });
       }
     }
   },
@@ -41,17 +40,13 @@ const routes = [
     name: "Enroll",
     component: Enroll,
     beforeEnter: (to, from, next) => {
-      if(to.params.status == true && to.params.username) {
-        next()
+      if (to.params.status == true) {
+        next();
       } else {
-        next({ name: "Home"})
+        next({ name: "Home" });
       }
     }
   }
-    
-
-  
-
 ];
 
 const router = new VueRouter({
