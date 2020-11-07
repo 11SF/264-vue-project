@@ -16,7 +16,7 @@ export default {
   name: "Navbar",
   components: {
   },
-  props: ["onClickToggle","test1"],
+  props: ["test1"],
   methods: {
     toggle() {
       this.$emit("onClickToggle")

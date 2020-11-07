@@ -28,7 +28,7 @@ export default {
   methods: {
     toggle() {
       if(this.drawer == true)
-        this.drawer = !this.drawer
+        this.drawer = null
       this.drawer = !this.drawer
     }
   }
