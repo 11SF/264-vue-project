@@ -28,11 +28,10 @@ const routes = [
     name: "Profile",
     component: Profile,
     beforeEnter: (to, from, next) => {
-      if (to.params.status == true) {
+      if (to.params == null || to.params.status == true) {
         next();
-      } else {
-        next({ name: "Home" });
-      }
+      } else
+      next({ name: "Login" });
     }
   },
   {
@@ -40,10 +39,10 @@ const routes = [
     name: "Enroll",
     component: Enroll,
     beforeEnter: (to, from, next) => {
-      if (to.params.status == true) {
+      if (to.params.status == true ) {
         next();
       } else {
-        next({ name: "Home" });
+        next({ name: "Login" });
       }
     }
   }

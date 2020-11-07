@@ -1,50 +1,47 @@
-<template>
-  <div class="wrapper">
-    <form class="form-signin mx-auto" action="/auth/login" method="GET">
-      <h4 class="form-signin-heading text-center">
-        เข้าสู่ระบบ (นักศึกษา/บุคลากร)
-      </h4>
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          name="username"
-          id="username"
-          aria-describedby="helpId"
-          placeholder="เลขทะเบียนนักศึกษา/รหัสผู้ใช้"
-          v-model="login_data['username']"
-        />
-      </div>
-      <div class="form-group">
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          id="password"
-          aria-describedby="helpId"
-          placeholder="รหัสผ่าน"
-          v-model="login_data['password']"
-        />
-      </div>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="this.$store.state.userData['status'] == 'FALSE'"
+<template >
+  <div class="lg ml-0 mr-0 pa-0">
+    <div class="login">
+      <v-card
+        max-width="600"
+        class="pa-8 mx-auto login_box"
+        elevation="10"
+        shaped
       >
-        {{ this.$store.state.userData["message"] }}
-      </div>
-      <button type="button" class="btn btn-primary btn-block" @click="authAPI">
-        เข้าสู่ระบบ
-      </button>
-      <p class="text-right">@CSTU</p>
-      <div
-        class="alert alert-primary"
-        role="alert"
-        v-if="this.$store.state.userData['status'] == true"
-      >
-        {{ this.$store.state.userData["message"] }}
-      </div>
-    </form>
+        <h1>เข้าสู่ระบบ (นักศึกษา/บุคคลากร)</h1>
+        <v-container class="pa-10">
+          <v-form>
+            <v-text-field
+              label="Username"
+              v-model="login_data['username']"
+              required
+            ></v-text-field>
+            <v-text-field
+              label="Password"
+              type="password"
+              v-model="login_data['password']"
+              required
+            ></v-text-field>
+            <v-alert
+              color="red"
+              icon=""
+              type="warning"
+              v-if="$store.state.userData['status'] == 'FALSE'"
+            >
+              {{ $store.state.userData["message"] }}
+            </v-alert>
+            <v-btn
+              block
+              color="primary"
+              class="mt-4"
+              :loading="loading"
+              :disabled="loading"
+              @click="authAPI(), (loader = 'loading')"
+              >เข้าสู่ระบบ</v-btn
+            >
+          </v-form>
+        </v-container>
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -59,6 +56,8 @@ export default {
         username: "",
         password: ""
       },
+      loader: null,
+      loading: false,
       user_data: this.$store.state.session_login
     };
   },
@@ -66,7 +65,7 @@ export default {
   methods: {
     async authAPI() {
       let userData = await axios.post(
-        "https://cs264-backend-project.herokuapp.com/api/getUser",
+        "https://cs264-backend-project.herokuapp.com/api/user/identify",
         this.login_data
       );
       console.log(userData.data);
@@ -76,7 +75,8 @@ export default {
         this.$router.push("/");
         let data = {
           username: this.$store.state.userData["username"],
-          status: this.$store.state.userData["status"]
+          status: this.$store.state.userData["status"],
+          type: this.$store.state.userData["type"]
         };
         this.$session.set("login_session", data);
         this.$store.state.session_login = this.$session.get("login_session");
@@ -86,40 +86,45 @@ export default {
       this.vm.$forceUpdate();
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    }
+  }
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100;300;400&display=swap");
 
-template {
+.lg {
+  margin-top: -64px;
   background: #eeeeee;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
 }
-.wrapper {
-  margin: 80px;
-}
-.form-signin {
-  width: 400px;
-  max-width: 100%;
-  background-color: #ffffff;
-  padding: 15px 40px 50px;
-  border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
-.form-signin .form-signin-heading {
-  margin-bottom: 40px;
-  margin-top: 20px;
-}
-#password {
-  margin-bottom: 30px;
-}
-p {
+.login {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: top;
+  background-image: url(https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0.02rem;
   font-weight: 400;
-  font-size: 12px;
+}
+.login_box {
+  margin-top: 230px;
 }
 </style>

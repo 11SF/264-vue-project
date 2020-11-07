@@ -1,11 +1,11 @@
 <template>
-  <v-app-bar color="indigo" dense absolute dark>
+  <!-- <v-app-bar color="indigo" dense absolute dark>
     <div class="d-flex ">
       <v-toolbar-title class="mr-5">ระบบลงทะเบียนล้าช้า</v-toolbar-title>
     </div>
 
     <div>
-      <v-btn @click="goHome" color="indigo" class="mr-5">หน้าแรก</v-btn>
+      <v-btn @click.stop="toggle" color="indigo" class="mr-5">หน้าแรก</v-btn>
     </div>
     <div v-if="$store.state.session_login['status'] == true">
       <v-btn @click="goHome" color="indigo" class="mr-5">ลงทะเบียนเรียน</v-btn>
@@ -58,64 +58,30 @@
         <v-icon>mdi-login</v-icon>
       </v-btn>
     </div>
-  </v-app-bar>
+  </v-app-bar> -->
+  <v-app-bar
+      color="dark"
+      dark
+    >
+      <v-app-bar-nav-icon @click="toggle"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text v-if="$store.state.session_login['status'] == true" >คุณ {{ $store.state.userData['displayname_th'] }}</v-text>
+    </v-app-bar>
 </template>
 
 <script>
+// import NavigationDrawer from "../components/NavigationDrawer"
 export default {
   name: "Navbar",
-  data() {
-    return {
-      drawer: false,
-      group: null
-    };
+  components: {
+    // NavigationDrawer
   },
+  props: ["onClickToggle","test1"],
   methods: {
-    logOut() {
-      this.$session.clear("login_session");
-      this.$store.state.session_login = "";
-      this.$store.state.userData = "";
-      this.$router.push("/");
-    },
-    goProfile() {
-      this.session_update()
-      this.$router.push({
-        name: "Profile",
-        params: {
-          status: this.$store.state.session_login["status"],
-          username: this.$store.state.session_login["username"]
-        }
-      });
-    },
-    goEnroll() {
-      this.session_update()
-      this.$router.push({
-        name: "Enroll",
-        params: {
-          status: this.$store.state.session_login["status"],
-          username: this.$store.state.session_login["username"]
-          // on_time: //เช็คเวลาเปิดให้ลงทะเบียนกับ backend
-        }
-      });
-    },
-    goLogin() {
-      this.$router.push({
-        name: "Login",
-      });
-    },
-    goHome() {
-      this.$router.push({
-        name: "Home",
-      });
-    },
-    session_update() {
-      let test = this.$session.get("login_session")
-      if(test['status'] == true) {
-        this.$store.state.session_login = this.$session.get("login_session");  
-      } else {
-        this.logOut();
-        this.vm.$forceUpdate();
-      }
+    toggle() {
+      this.$emit("onClickToggle")
     }
   },
   mounted: {},
