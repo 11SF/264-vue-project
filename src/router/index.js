@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
-import Enroll from "../views/RegisSubject.vue";
+import Enroll from "../views/Enroll.vue";
 
 Vue.use(VueRouter);
 
@@ -27,24 +27,24 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
-    beforeEnter: (to, from, next) => {
-      if (to.params == null || to.params.status == true) {
-        next();
-      } else
-      next({ name: "Login" });
-    }
+    // beforeEnter: (to, from, next) => {
+    //   if (to.params == null || to.params.status == true) {
+    //     next();
+    //   } else
+    //   next({ name: "Login" });
+    // }
   },
   {
     path: "/enroll",
     name: "Enroll",
     component: Enroll,
-    beforeEnter: (to, from, next) => {
-      if (to.params.status == true ) {
-        next();
-      } else {
-        next({ name: "Login" });
-      }
-    }
+    // beforeEnter: (to, from, next) => {
+    //   if (to.params.status == true ) {
+    //     next();
+    //   } else {
+    //     next({ name: "Login" });
+    //   }
+    // }
   }
 ];
 

@@ -12,22 +12,29 @@
           <v-col>
             <h1 class="text-center">ยินดีต้อนรับ</h1>
             <v-divider dark insert></v-divider>
-            <h4 class="text-center">ยังไม่ถึงช่วงเวลาการลงทะเบียนล้าช้า</h4>
+            <h4 class="text-center">
+              สามารถดำเนินการลงทะเบียนล้าช้าได้ตั้งแต่วันที่ 07/11/2563 ถึงวันที่
+              31/12/2563
+            </h4>
+            <v-row justify="center" class="mt-12">
+              <v-btn depressed elevation="2" x-large rounded  dark color="green" v-if="$store.state.session_login['status'] != true" @click="()=>{ this.$router.push({name: 'Login'})}">เข้าสู่ระบบ</v-btn>
+            </v-row>
+            
           </v-col>
         </v-row>
       </v-container>
     </v-parallax>
-    <v-container>
-      <h1 class="text-center">กำหนดการลงทะเบียน</h1>
-    </v-container>
+    <TimelineProcess />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import TimelineProcess from "../components/TimelineProcess";
 
 export default {
   name: "Home",
-  components: {}
+  components: {
+    TimelineProcess
+  }
 };
 </script>

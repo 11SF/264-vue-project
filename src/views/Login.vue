@@ -23,7 +23,7 @@
             ></v-text-field>
             <v-alert
               color="red"
-              icon=""
+              icon="mdi-alert-circle"
               type="warning"
               v-if="$store.state.userData['status'] == 'FALSE'"
             >
@@ -35,8 +35,10 @@
               class="mt-4"
               :loading="loading"
               :disabled="loading"
-              @click="authAPI(), (loader = 'loading')"
-              >เข้าสู่ระบบ</v-btn
+              @click="authAPI()"
+            >
+              <Loading v-if="inprocess == true" />
+              เข้าสู่ระบบ</v-btn
             >
           </v-form>
         </v-container>
@@ -47,6 +49,7 @@
 
 <script>
 import axios from "axios";
+import Loading from "../components/Loading";
 
 export default {
   name: "Login",
@@ -56,18 +59,22 @@ export default {
         username: "",
         password: ""
       },
-      loader: null,
-      loading: false,
-      user_data: this.$store.state.session_login
+      user_data: this.$store.state.session_login,
+      inprocess: false
     };
+  },
+  components: {
+    Loading
   },
 
   methods: {
     async authAPI() {
+      this.inprocess = true
       let userData = await axios.post(
         "https://cs264-backend-project.herokuapp.com/api/user/identify",
         this.login_data
       );
+      this.inprocess = false
       console.log(userData.data);
       this.$store.state.userData = userData.data;
 
@@ -86,16 +93,7 @@ export default {
       this.vm.$forceUpdate();
     }
   },
-  watch: {
-    loader() {
-      const l = this.loader;
-      this[l] = !this[l];
-
-      setTimeout(() => (this[l] = false), 3000);
-
-      this.loader = null;
-    }
-  }
+  watch: {}
 };
 </script>
 
@@ -120,7 +118,7 @@ export default {
   background-image: url(https://images.unsplash.com/photo-1581078426770-6d336e5de7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
   width: 100%;
   height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Kanit", sans-serif;
   letter-spacing: 0.02rem;
   font-weight: 400;
 }
