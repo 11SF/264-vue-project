@@ -2,7 +2,8 @@
   <v-navigation-drawer v-model="onClickToggle" absolute temporary>
     <v-list-item v-if="$store.state.session_login['status'] == true">
       <v-list-item-avatar>
-        <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+        <!-- <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img> -->
+        <v-icon size="40" color="blue">mdi-account-circle</v-icon>
       </v-list-item-avatar>
 
       <v-list-item-content>
@@ -17,7 +18,6 @@
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
-
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
@@ -41,8 +41,6 @@ export default {
         { title: "หน้าแรก", icon: "mdi-view-dashboard", link: this.goHome },
         { title: "ข้อมูลส่วนตัว", icon: "mdi-image", link: this.goProfile },
         { title: "ดำเนินการลงทะเบียนล้าช้า", icon: "mdi-image", link: this.goEnroll },
-        { title: "ชำระเงิน", icon: "mdi-image", link: this.goEnroll },
-        { title: "สถานะการดำเนินการ", icon: "mdi-image", link: this.goEnroll },
         { title: "ออกจากระบบ", icon: "mdi-image", link: this.logOut }
       ],
       test : true
@@ -100,6 +98,7 @@ export default {
       } else {
         this.logOut();
         this.vm.$forceUpdate();
+        
       }
     },
   }
@@ -108,3 +107,4 @@ export default {
 
 <style>
 </style>
+

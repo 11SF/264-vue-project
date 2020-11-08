@@ -4,7 +4,7 @@
       <v-card width="1096" class="pa-10" rounded>
         <h3 class="mb-10">กรุณากรอกข้อมูลให้ครบถ้วน</h3>
         <v-divider></v-divider>
-        <v-form>
+        <v-form ref="form" v-model="valid" lazy-validation>
           <p>ข้อมูลส่วนตัว</p>
           <v-row class="py-5">
             <v-col cols="12" sm="6">
@@ -20,8 +20,9 @@
             </v-col>
             <v-col cols="12" sm="3">
               <v-select
+                v-model="form_data.owner_info.college_years"
                 :items="items"
-                :rules="[v => !!v || 'Item is required']"
+                :rules="itemRequest"
                 label="ชั้นปีที่"
                 required
               >
@@ -32,32 +33,70 @@
           <p>ที่อยู่ที่ติดต่อได้</p>
           <v-row>
             <v-col cols="12" sm="4">
-              <v-text-field label="เลขที่" required> </v-text-field>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.address.no"
+                label="เลขที่"
+                required
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="8">
-              <v-text-field label="แขวง/ตำบล" required> </v-text-field>
+              <v-text-field
+                v-model="form_data.owner_info.address.sub_district"
+                label="แขวง/ตำบล"
+                required
+              >
+              </v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" sm="6">
-              <v-text-field label="เขต/อำเภอ" required> </v-text-field>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.address.district"
+                label="เขต/อำเภอ"
+                required
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field label="จังหวัด" required> </v-text-field>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.address.province"
+                label="จังหวัด"
+                required
+              >
+              </v-text-field>
             </v-col>
           </v-row>
           <v-divider></v-divider>
           <v-row>
             <v-col cols="6" sm="6">
-              <v-text-field label="โทรศัพท์ติดต่อนักศึกษา" required>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.tel_number"
+                label="โทรศัพท์ติดต่อนักศึกษา"
+                required
+              >
               </v-text-field>
             </v-col>
             <v-col cols="6" sm="6">
-              <v-text-field label="โทรศัพท์ติดต่อผู้ปกครอง" required>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.parents_tel_number"
+                label="โทรศัพท์ติดต่อผู้ปกครอง"
+                required
+              >
               </v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
-              <v-text-field label="ชื่ออาจารย์ที่ปรึกษา" required>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.owner_info.advisor"
+                label="ชื่ออาจารย์ที่ปรึกษา"
+                required
+              >
               </v-text-field>
             </v-col>
           </v-row>
@@ -65,26 +104,56 @@
           <p>ประสงค์จะลงทะเบียนในรายวิชา</p>
           <v-row>
             <v-col cols="12" sm="4">
-              <v-text-field label="รหัสวิชา"> required</v-text-field>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.subject_id"
+                label="รหัสวิชา"
+                required
+              >
+                required</v-text-field
+              >
             </v-col>
-            <v-col cols="12" sm="8">
-              <v-text-field label="Section"> required</v-text-field>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.section"
+                label="Section"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.semester"
+                label="ภาคเรียนที่"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.year"
+                label="ปีการศึกษา"
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
-              <v-text-field label="ชื่อวิชา"> required</v-text-field>
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.subject_name"
+                label="ชื่อวิชา"
+              >
+              </v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-textarea
-              label="เหตุผลที่ยื่นคำร้อง"
-              >
-
+              <v-textarea :rules="itemRequest" label="เหตุผลที่ยื่นคำร้อง">
               </v-textarea>
             </v-col>
           </v-row>
           <v-row justify="end">
-            <v-btn color="green" dark>ยืนยันข้อมูล</v-btn>
+            <v-btn color="green" @click="validate(), saveForm()" dark>ยืนยันข้อมูล</v-btn>
           </v-row>
         </v-form>
       </v-card>
@@ -93,11 +162,67 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
-      items: [1, 2, 3, 4, 5, 6, 7, 8]
+      items: [1, 2, 3, 4, 5, 6, 7, 8],
+      form_data: {
+        owner_info: {
+          name: this.$store.state.userData["displayname_th"],
+          student_id: this.$store.state.userData["username"],
+          college_years: "",
+          department: this.$store.state.userData["department"],
+          address: {
+            no: "",
+            sub_district: "",
+            district: "",
+            province: ""
+          },
+          tel_number: "",
+          parents_tel_number: "",
+          advisor: ""
+        },
+        subject_info: {
+          semester: "",
+          year: "",
+          subject_name: "",
+          subject_id: "",
+          section: "",
+          teacher_name: ""
+        },
+        reason: "",
+        acception: {
+          advisor: {
+            name: "",
+            comment: ""
+          },
+          staff: {
+            name: String,
+            comment: String
+          },
+          teacher: {
+            name: String,
+            comment: String
+          }
+        },
+        timestamps: {
+          type: String
+        }
+      },
+      itemRequest: [v => !!v || "Item is required"],
+      valid: false
     };
+  },
+  methods: {
+    validate() {
+      this.$refs.form.validate();
+    },
+    async saveForm() {
+      let res = await axios.post('https://cs264-backend-project.herokuapp.com/api/enroll/submitEnrollForm', this.form_data)
+      console.log(res.data)
+      this.$router.push("/enroll");
+    }  
   }
 };
 </script>
