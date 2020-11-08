@@ -150,6 +150,8 @@ export default {
       this.enrollRules = res.data.data;
     },
     goEnrollForm() {
+      if(this.agree == false)
+        this.agree = true
       this.$router.push({
         name: "EnrollForm",
         params: {

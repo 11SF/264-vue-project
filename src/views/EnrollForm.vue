@@ -153,7 +153,7 @@
             </v-col>
           </v-row>
           <v-row justify="end">
-            <v-btn color="green" @click="validate(), saveForm()" dark>ยืนยันข้อมูล</v-btn>
+            <v-btn color="green" @click="saveForm()" dark>ยืนยันข้อมูล</v-btn>
           </v-row>
         </v-form>
       </v-card>
@@ -162,8 +162,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+
 export default {
+  name: "EnrollForm",
   data() {
     return {
       items: [1, 2, 3, 4, 5, 6, 7, 8],
@@ -192,40 +194,35 @@ export default {
           teacher_name: ""
         },
         reason: "",
-        acception: {
-          advisor: {
-            name: "",
-            comment: ""
-          },
-          staff: {
-            name: String,
-            comment: String
-          },
-          teacher: {
-            name: String,
-            comment: String
-          }
-        },
-        timestamps: {
-          type: String
-        }
+        timestamps: ""
       },
       itemRequest: [v => !!v || "Item is required"],
       valid: false
     };
   },
+
   methods: {
     validate() {
       this.$refs.form.validate();
+      // this.saveForm();
     },
     async saveForm() {
-      let res = await axios.post('https://cs264-backend-project.herokuapp.com/api/enroll/submitEnrollForm', this.form_data)
-      console.log(res.data)
-      this.$router.push("/enroll");
-    }  
+      let res = await axios
+        .post(
+          "https://cs264-backend-project.herokuapp.com/api/enroll/submitEnrollForm",
+          this.form_data,
+        );
+      console.log(res);
+      this.$router.push({
+        name: "Enroll",
+        params: {
+          status: this.$store.state.session_login["status"],
+          username: this.$store.state.session_login["username"],
+        }
+      });
+    }
   }
 };
 </script>
-    name: "EnrollForm"
 <style>
 </style>

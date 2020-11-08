@@ -51,13 +51,13 @@ const routes = [
     path: "/enrollform",
     name: "EnrollForm",
     component: EnrollForm,
-    // beforeEnter: (to, from, next) => {
-    //   if (to.params.status == true && to.params.agree == true) {
-    //     next();
-    //   } else {
-    //     next({ name: "Enroll" });
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (to.params.status == true && to.params.agree == true) {
+        next();
+      } else {
+        next({ name: "Enroll" });
+      }
+    }
   }
 ];
 
