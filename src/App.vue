@@ -1,16 +1,21 @@
 <template>
   <v-app>
-      <Navbar @onClickToggle="toggle"/>
-      <router-view />  
-      <v-container class="fill-height">
-        <NavigationDrawer :onClickToggle="drawer"/>  
-      </v-container>
+    <Navbar @onClickToggle="toggle" />
+
+    <router-view />
+
+    <v-container class="fill-height">
+      <NavigationDrawer :onClickToggle="drawer" @resetToggle="reset" />
+    </v-container>
+    <!-- <v-content>
+      
+    </v-content> -->
   </v-app>
 </template>
 
 <script>
 import Navbar from "./components/Navbar";
-import NavigationDrawer from "./components/NavigationDrawer"
+import NavigationDrawer from "./components/NavigationDrawer";
 
 export default {
   name: "App",
@@ -22,14 +27,16 @@ export default {
   },
   data() {
     return {
-      drawer: null,
+      drawer: false,
+      couter: 0
     };
   },
   methods: {
     toggle() {
-      if(this.drawer == true)
-        this.drawer = null
-      this.drawer = !this.drawer
+      this.drawer = !this.drawer;
+    },
+    reset() {
+      this.drawer = false;
     }
   }
 };

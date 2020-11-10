@@ -145,6 +145,14 @@
               >
               </v-text-field>
             </v-col>
+            <v-col cols="12" sm="12">
+              <v-text-field
+                :rules="itemRequest"
+                v-model="form_data.subject_info.teacher_name"
+                label="อาจารย์ผู้สอน"
+              >
+              </v-text-field>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
@@ -207,19 +215,26 @@ export default {
       // this.saveForm();
     },
     async saveForm() {
-      let res = await axios
-        .post(
-          "https://cs264-backend-project.herokuapp.com/api/enroll/submitEnrollForm",
-          this.form_data,
-        );
+      this.getCurrentTime();
+      let res = await axios.post(
+        "https://cs264-backend-project.herokuapp.com/api/enroll/submitEnrollForm",
+        this.form_data
+      );
       console.log(res);
       this.$router.push({
         name: "Enroll",
         params: {
           status: this.$store.state.session_login["status"],
-          username: this.$store.state.session_login["username"],
+          username: this.$store.state.session_login["username"]
         }
       });
+    },
+    getCurrentTime() {
+      const today = new Date();
+      const date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date + " " + time;
+      this.form_data.timestamps = dateTime;
     }
   }
 };

@@ -1,20 +1,26 @@
 <template>
-  <v-navigation-drawer v-model="onClickToggle" absolute temporary>
-    <v-list-item v-if="$store.state.session_login['status'] == true">
+  <v-navigation-drawer absolute permanent expand-on-hover>
+    <v-list-item v-if="$store.state.session_login['status'] == true" class="ml-2  pa-0 pt-2">
       <v-list-item-avatar>
-        <!-- <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img> -->
-        <v-icon size="40" color="blue">mdi-account-circle</v-icon>
+        <v-icon size="40" color="blue" >mdi-account-circle</v-icon>
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title>{{ $store.state.userData['displayname_th'] }}</v-list-item-title>
+        <v-list-item-title> คุณ {{
+          $store.state.userData["displayname_th"]
+        }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
-    <v-divider v-if="$store.state.session_login['status'] == true" ></v-divider>
+    <v-divider v-if="$store.state.session_login['status'] == true"></v-divider>
 
     <v-list dense>
-      <v-list-item v-for="item in menu_items()" :key="item.title" link @click="item.link()">
+      <v-list-item
+        v-for="item in menu_items()"
+        :key="item.title"
+        link
+        @click="item.link()"
+      >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -22,7 +28,6 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -35,15 +40,19 @@ export default {
     return {
       items_guest: [
         { title: "หน้าแรก", icon: "mdi-view-dashboard", link: this.goHome },
-        { title: "เข้าสู่ระบบ", icon: "mdi-image", link: this.goLogin}
+        { title: "เข้าสู่ระบบ", icon: "mdi-login", link: this.goLogin }
       ],
       items_student: [
         { title: "หน้าแรก", icon: "mdi-view-dashboard", link: this.goHome },
-        { title: "ข้อมูลส่วนตัว", icon: "mdi-image", link: this.goProfile },
-        { title: "ดำเนินการลงทะเบียนล้าช้า", icon: "mdi-image", link: this.goEnroll },
-        { title: "ออกจากระบบ", icon: "mdi-image", link: this.logOut }
+        { title: "ข้อมูลส่วนตัว", icon: "mdi-account-box-multiple", link: this.goProfile },
+        {
+          title: "ดำเนินการลงทะเบียนล้าช้า",
+          icon: "mdi-pencil-plus",
+          link: this.goEnroll
+        },
+        { title: "ออกจากระบบ", icon: "mdi-logout", link: this.logOut }
       ],
-      test : true
+      test: true
     };
   },
   methods: {
@@ -98,9 +107,8 @@ export default {
       } else {
         this.logOut();
         this.vm.$forceUpdate();
-        
       }
-    },
+    }
   }
 };
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <v-row class="ma-3">
-      <h1>ลงทะเบียน</h1>
-    </v-row>
     <v-row class="mx-auto" justify="center">
       <div class="area">
+        <v-row class="ma-3">
+          <h1>ลงทะเบียน</h1>
+        </v-row>
         <v-row justify="end" class="ma-5">
           <v-dialog v-model="dialog" width="600px">
             <template v-slot:activator="{ on, attrs }">
@@ -23,7 +23,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red" text @click="dialog = false">
+                <v-btn color="red" text @click="(dialog = false)">
                   Disagree
                 </v-btn>
                 <v-btn
@@ -41,7 +41,6 @@
         <v-row justify="center">
           <v-sheet
             width="95.7%"
-            height="600"
             rounded
             color="gray darken-2"
             elevation="10"
@@ -49,32 +48,36 @@
           >
             <v-expansion-panels>
               <loading v-if="forms == ''" />
-              <v-expansion-panel v-for="form in forms" :key="form">
+              <v-row v-if="forms == 'null'" justify="center">
+                <h4>ไม่มีข้อมูลการลงทะเบียน</h4>
+              </v-row>
+              <v-expansion-panel v-for="form in forms" :key="form" v-else>
                 <v-expansion-panel-header disable-icon-rotate>
                   <v-row>
                     <v-col>
                       <h6>{{ form.subject_info.subject_name }}</h6>
-                      <p>ผู้สอน : อาจารย์{{ form.subject_info.teacher_name }}</p>
+                      <p>
+                        ผู้สอน : อาจารย์{{ form.subject_info.teacher_name }}
+                      </p>
                     </v-col>
                     <v-col>
                       <p>รหัสวิชา : {{ form.subject_info.subject_id }}</p>
                       <p>Seccion : {{ form.subject_info.section }}</p>
-                       
                     </v-col>
                   </v-row>
                   <template v-slot:actions>
-                    <v-icon color="teal" v-if="alertIcon(form) == 'success' ">
+                    <v-icon color="teal" v-if="alertIcon(form) == 'success'">
                       mdi-check
                     </v-icon>
                     <v-icon
                       color="blue"
-                      v-else-if="alertIcon(form) == 'process' "
+                      v-else-if="alertIcon(form) == 'process'"
                     >
                       mdi-vanish
                     </v-icon>
                     <v-icon
                       color="error"
-                      v-else-if="alertIcon(form) == 'warning' "
+                      v-else-if="alertIcon(form) == 'warning'"
                     >
                       mdi-alert-circle
                     </v-icon>
@@ -127,7 +130,8 @@ export default {
       enrollRules: "",
       agree: false,
       sheet: false,
-      overlay: false
+      overlay: false,
+      dialog: ""
     };
   },
   methods: {
@@ -142,6 +146,9 @@ export default {
         }
       );
       this.forms = res.data;
+      if (this.forms == "") {
+        this.forms = "null";
+      }
     },
     async fetchEnrollRule() {
       const res = await axios.get(
@@ -150,8 +157,7 @@ export default {
       this.enrollRules = res.data.data;
     },
     goEnrollForm() {
-      if(this.agree == false)
-        this.agree = true
+      if (this.agree == false) this.agree = true;
       this.$router.push({
         name: "EnrollForm",
         params: {

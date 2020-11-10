@@ -1,25 +1,26 @@
 <template>
-  <v-app-bar
+    <v-app-bar
       color="dark"
       dark
     >
       <v-app-bar-nav-icon @click="toggle"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title>
+      <!-- <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title> -->
       <v-spacer></v-spacer>
-      <v-text v-if="$store.state.session_login['status'] == true" >คุณ {{ $store.state.userData['displayname_th'] }}</v-text>
+      <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title>
+      <!-- <v-text v-if="$store.state.session_login['status'] == true">คุณ {{ $store.state.userData["displayname_th"] }}</v-text> -->
     </v-app-bar>
+    
 </template>
 
 <script>
 export default {
   name: "Navbar",
-  components: {
-  },
+  components: {},
   props: ["test1"],
   methods: {
     toggle() {
-      this.$emit("onClickToggle")
+      this.$emit("onClickToggle");
     }
   },
   mounted: {},
