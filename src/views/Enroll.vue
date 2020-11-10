@@ -62,7 +62,7 @@
                     </v-col>
                     <v-col>
                       <p>รหัสวิชา : {{ form.subject_info.subject_id }}</p>
-                      <p>Seccion : {{ form.subject_info.section }}</p>
+                      <p>Section : {{ form.subject_info.section }}</p>
                     </v-col>
                   </v-row>
                   <template v-slot:actions>
