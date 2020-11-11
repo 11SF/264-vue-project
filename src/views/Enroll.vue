@@ -3,10 +3,15 @@
     <v-row class="mx-auto" justify="center">
       <div class="area">
         <v-row class="ma-3">
-          <h1>ลงทะเบียน</h1>
+          <h1 v-if="$store.state.userData['type'] == 'student'">ลงทะเบียน</h1>
+          <h1 v-else>ตรวจสอบคำร้องลงทะเบียน</h1>
         </v-row>
         <v-row justify="end" class="ma-5">
-          <v-dialog v-model="dialog" width="600px">
+          <v-dialog
+            v-model="dialog"
+            width="600px"
+            v-if="$store.state.userData['type'] == 'student'"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on">
                 เพิ่มรายวิชา
@@ -23,7 +28,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red" text @click="(dialog = false)">
+                <v-btn color="red" text @click="dialog = false">
                   Disagree
                 </v-btn>
                 <v-btn
@@ -84,10 +89,27 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
+                  <v-row v-if="$store.state.session_login['type'] == 'student' ">
+                    <v-col cols="6" sm="2">
+                      <v-btn color="primary" dark @click="goViewForm(), ($store.state.form_id_for_employee = form)">
+                        ดูใบคำร้อง
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="6" sm="2">
+                      <v-btn color="green" dark @click="goViewProcess(), ($store.state.form_id_for_employee = form)">
+                        ตรวจสอบสถานะ
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row v-else>
+                    <v-col cols="6" sm="2">
+                      <v-btn color="primary" dark @click="goViewForm(), ($store.state.form_id_for_employee = form)">
+                        ตรวจสอบใบคำร้อง
+                      </v-btn>
+                    </v-col>
+                    
+                  </v-row>
                   <div class="">
-                    <v-btn color="green" dark @click="overlay = !overlay">
-                      ตรวจสอบสถานะ
-                    </v-btn>
                     <v-overlay :value="overlay">
                       <v-card
                         class="pa-6 scroll"
@@ -136,16 +158,30 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await axios.get(
-        "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
-        {
-          params: {
-            select: 1,
-            student_id: this.$store.state.userData["username"]
+      if (this.$store.state.session_login["type"] == "employee") {
+        const res = await axios.get(
+          "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
+          {
+            params: {
+              select: 3,
+              name: this.$store.state.userData["displayname_th"],
+              accept: false //accept status select
+            }
           }
-        }
-      );
-      this.forms = res.data;
+        );
+        this.forms = res.data;
+      } else {
+        const res = await axios.get(
+          "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
+          {
+            params: {
+              select: 1,
+              student_id: this.$store.state.userData["username"]
+            }
+          }
+        );
+        this.forms = res.data;
+      }
       if (this.forms == "") {
         this.forms = "null";
       }
@@ -190,6 +226,12 @@ export default {
       } else {
         return "process";
       }
+    },
+    goViewForm() {
+      this.$router.push("/viewform");
+    },
+    goViewProcess() {
+      this.$router.push("/viewprocess");
     }
   },
   mounted() {

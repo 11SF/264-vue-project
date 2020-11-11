@@ -1,23 +1,25 @@
 <template>
   <div>
     <v-row justify="center" align-content="center">
-      <v-col>
+      
         <v-sheet
           rounded
           elevation="4"
-          width="100%"
-          max-width="1080px"
-          class="pa-10 mx-auto"
+          max-width="1200"
+          class="pa-12 ml-12 my-12"
         >
-          <h1 class="mx-12">ข้อมูลส่วนตัว</h1>
+        <v-col cols="12" sm="12">
+          <h1 >ข้อมูลส่วนตัว</h1>
+        </v-col>
+          
           <v-divider insert></v-divider>
           <v-row justify="center" align-content="center">
-            <v-col>
-              <v-icon size="200" color="yellow darken-2"
+            <v-col cols="12" sm="6">
+              <v-icon size="200" color="yellow darken-2" 
                 >mdi-account-circle</v-icon
               >
             </v-col>
-            <v-col align-self="center">
+            <v-col align-self="center" cols="12" sm="6">
               <h3>{{ user["displayname_th"] }}</h3>
               <h5>{{ user["displayname_en"] }}</h5>
               <h5>{{ user["username"] }}</h5>
@@ -43,7 +45,7 @@
             </v-col>
           </v-row>
         </v-sheet>
-      </v-col>
+     
     </v-row>
   </div>
 </template>

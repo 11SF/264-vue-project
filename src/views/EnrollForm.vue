@@ -156,7 +156,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-textarea :rules="itemRequest" label="เหตุผลที่ยื่นคำร้อง">
+              <v-textarea :rules="itemRequest" label="เหตุผลที่ยื่นคำร้อง" v-model="form.reason">
               </v-textarea>
             </v-col>
           </v-row>

@@ -26,6 +26,8 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
+        
+          
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -52,13 +54,25 @@ export default {
         },
         { title: "ออกจากระบบ", icon: "mdi-logout", link: this.logOut }
       ],
+      items_employee: [
+        { title: "หน้าแรก", icon: "mdi-view-dashboard", link: this.goHome },
+        { title: "ข้อมูลส่วนตัว", icon: "mdi-account-box-multiple", link: this.goProfile },
+        {
+          title: "ตรวจสอบคำร้องการลงทะเบียน",
+          icon: "mdi-pencil-plus",
+          link: this.goEnroll
+        },
+        { title: "ออกจากระบบ", icon: "mdi-logout", link: this.logOut }
+      ],
       test: true
     };
   },
   methods: {
     menu_items() {
-      if (this.$store.state.session_login["status"] == true) {
+      if (this.$store.state.session_login["status"] == true && this.$store.state.session_login['type'] == 'student') {
         return this.items_student;
+      } else if(this.$store.state.session_login["status"] == true && this.$store.state.session_login['type'] == 'employee') {
+        return this.items_employee;
       } else {
         return this.items_guest;
       }
