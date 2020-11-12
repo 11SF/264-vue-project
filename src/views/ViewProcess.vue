@@ -5,26 +5,41 @@
     </v-row>
     <v-row justify="center" align-content="center">
       <v-col cols="12" sm="6">
-        <v-card class="pa-8" >
-          <h3>อาจารย์ที่ปรึกษา</h3>
+        <v-card class="pa-8">
+          <v-row>
+            <v-col cols="12" sm="12">
+              <h3>อาจารย์ที่ปรึกษา</h3>
+            </v-col>
+          </v-row>
+
           <v-divider insert></v-divider>
-          <h5>ชื่อ-สกุล : {{form.owner_info.advisor}}</h5>
-          <h5>ความเห็นจากอาจารย์ที่ปรึกษา</h5>
-          <p>{{form.acception.advisor.comment}}</p>
-          <p>วันที่ :{{form.acception.advisor.time}}</p>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <h5>ชื่อ-สกุล :</h5>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <p>{{ form.owner_info.advisor }}</p>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <h5>ความเห็นจากอาจารย์ที่ปรึกษา</h5>
+              <p>{{ form.acception.advisor.comment }}</p>
+              <p>วันที่ :{{ form.acception.advisor.time }}</p>
+            </v-col>
+            <v-col cols="12" sm="6" v-if="form.acception.advisor.approve == true"> 
+              <v-icon color="green " size="100">
+                mdi-checkbox-marked-circle-outline
+              </v-icon>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="6">
-        
-      </v-col>
+      <v-col cols="12" sm="6"> </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="6">
-        
-      </v-col>
-      <v-col cols="12" sm="6">
-        
-      </v-col>
+      <v-col cols="12" sm="6"> </v-col>
+      <v-col cols="12" sm="6"> </v-col>
     </v-row>
   </v-container>
 </template>
@@ -38,11 +53,11 @@ export default {
   data() {
     return {
       form: this.$store.state.form_id_for_employee,
-      loading: ""
+      loading: "",
     };
   },
   components: {
-    Loading
+    Loading,
   },
   methods: {
     // async fetchFormData() {
@@ -62,7 +77,7 @@ export default {
   },
   mounted() {
     this.fetchFormData();
-  }
+  },
 };
 </script>
 

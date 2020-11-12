@@ -92,10 +92,10 @@
         <p>ยืนยันแบบฟอร์ม</p>
         <v-form>
           <v-row>
-            <v-col cols="12" sm="12">
+            <v-col cols="12" sm="8">
               <v-text-field label="ชื่อ-สกุล"></v-text-field>
             </v-col>
-            <!-- <v-col cols="12" sm="4">
+            <v-col cols="12" sm="4">
               <v-select
                 v-model="approve"
                 :items="items"
@@ -104,7 +104,7 @@
                 required
               >
               </v-select>
-            </v-col> -->
+            </v-col>
             <v-col cols="12" sm="12">
               <v-textarea
                 

@@ -20,10 +20,7 @@
                 </v-icon>
               </v-col>
               <v-col cols="12" md="10">
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus.
+                เข้าสู่ระบบด้วยบัญชีผู้ใช้ของมหาลัยธรรมศาสตร์
               </v-col>
             </v-row>
           </v-container>
@@ -37,15 +34,13 @@
               mdi-magnify
             </v-icon>
             <h2 class="display-1 white--text font-weight-light">
-              กรอกข้อมูลในแบบฟอร์มให้ครบถ้วน
+              เพิ่มรายวิชาที่ต้องการลงทะเบียน
             </h2>
           </v-card-title>
           <v-container>
             <v-row>
               <v-col cols="12" md="10">
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit.
+                เพิ่มรายวิชาและกรอกข้อมูลในแบบฟอร์มให้ครบถ้วนและถูกต้องจากนั้นกดยืนยัน
               </v-col>
               <v-col class="hidden-sm-and-down text-right" md="2">
                 <v-icon size="64">
@@ -69,14 +64,10 @@
           </v-card-title>
           <v-container>
             <v-row>
-              <v-col cols="12" md="8">
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit.
+              <v-col cols="12" md="12">
+                รออนุมัติจากอาจารย์ที่ปรึกษา เจ้าหน้าที่โครงการ อาจารย์ผู้สอน และ คณบดี
               </v-col>
-              <v-col cols="12" md="4">
-                Lorem ipsum dolor sit amet, no nam oblique veritus.
-              </v-col>
+              
             </v-row>
           </v-container>
         </v-card>
@@ -94,14 +85,10 @@
           </v-card-title>
           <v-container>
             <v-row>
-              <v-col cols="12" md="8">
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit.
+              <v-col cols="12" md="12">
+                ชำระเงินผ่านระบบของธนาคาร
               </v-col>
-              <v-col cols="12" md="4">
-                Lorem ipsum dolor sit amet, no nam oblique veritus.
-              </v-col>
+              
             </v-row>
           </v-container>
         </v-card>
