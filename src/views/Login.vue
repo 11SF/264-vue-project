@@ -78,10 +78,20 @@ export default {
       console.log(userData.data);
       this.$store.state.userData = userData.data;
 
-      if (this.$store.state.userData["status"] == true) {
+      if (this.$store.state.userData["status"] == true && this.$store.state.userData["type"] == 'student') {
         this.$router.push("/");
         let data = {
           username: this.$store.state.userData["username"],
+          status: this.$store.state.userData["status"],
+          type: this.$store.state.userData["type"]
+        };
+        this.$session.set("login_session", data);
+        this.$store.state.session_login = this.$session.get("login_session");
+      }
+      else if(this.$store.state.userData["status"] == true && this.$store.state.userData["type"] == 'employee') {
+        this.$router.push("/");
+        let data = {
+          username: this.$store.state.userData["displayname_th"],
           status: this.$store.state.userData["status"],
           type: this.$store.state.userData["type"]
         };

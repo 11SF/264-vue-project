@@ -89,25 +89,45 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <v-row v-if="$store.state.session_login['type'] == 'student' ">
+                  <v-row v-if="$store.state.session_login['type'] == 'student'">
                     <v-col cols="6" sm="2">
-                      <v-btn color="primary" dark @click="goViewForm(), ($store.state.form_id_for_employee = form)">
+                      <v-btn
+                        color="primary"
+                        dark
+                        @click="
+                          goViewForm(),
+                            ($store.state.form_id_for_employee = form)
+                        "
+                      >
                         ดูใบคำร้อง
                       </v-btn>
                     </v-col>
                     <v-col cols="6" sm="2">
-                      <v-btn color="green" dark @click="goViewProcess(), ($store.state.form_id_for_employee = form)">
+                      <v-btn
+                        color="green"
+                        dark
+                        @click="
+                          goViewProcess(),
+                            ($store.state.form_id_for_employee = form)
+                        "
+                      >
                         ตรวจสอบสถานะ
                       </v-btn>
                     </v-col>
                   </v-row>
                   <v-row v-else>
                     <v-col cols="6" sm="2">
-                      <v-btn color="primary" dark @click="goViewForm(), ($store.state.form_id_for_employee = form)">
+                      <v-btn
+                        color="primary"
+                        dark
+                        @click="
+                          goViewForm(),
+                            ($store.state.form_id_for_employee = form)
+                        "
+                      >
                         ตรวจสอบใบคำร้อง
                       </v-btn>
                     </v-col>
-                    
                   </v-row>
                   <div class="">
                     <v-overlay :value="overlay">
@@ -153,7 +173,7 @@ export default {
       agree: false,
       sheet: false,
       overlay: false,
-      dialog: ""
+      dialog: "",
     };
   },
   methods: {
@@ -165,8 +185,8 @@ export default {
             params: {
               select: 3,
               name: this.$store.state.userData["displayname_th"],
-              accept: false //accept status select
-            }
+              accept: false, //accept status select
+            },
           }
         );
         this.forms = res.data;
@@ -176,8 +196,8 @@ export default {
           {
             params: {
               select: 1,
-              student_id: this.$store.state.userData["username"]
-            }
+              student_id: this.$store.state.userData["username"],
+            },
           }
         );
         this.forms = res.data;
@@ -185,6 +205,7 @@ export default {
       if (this.forms == "") {
         this.forms = "null";
       }
+      this.updateForm();
     },
     async fetchEnrollRule() {
       const res = await axios.get(
@@ -199,8 +220,8 @@ export default {
         params: {
           status: this.$store.state.session_login["status"],
           username: this.$store.state.session_login["username"],
-          agree: this.agree
-        }
+          agree: this.agree,
+        },
       });
     },
     updateShow() {
@@ -232,16 +253,47 @@ export default {
     },
     goViewProcess() {
       this.$router.push("/viewprocess");
-    }
+    },
+    updateForm() {
+      this.forms.forEach(async (element) => {
+        if (
+          element.acception.advisor.accept &&
+          element.acception.staff.accept &&
+          element.acception.teacher.accept &&
+          element.acception.doyen.accept
+        ) {
+          await axios.put(
+            "https://cs264-backend-project.herokuapp.com/api/enroll/updateEnrollForm",
+            {
+              params: {
+                id: element._id,
+                form_status: true,
+              },
+            }
+          );
+        } else {
+          await axios.put(
+            "https://cs264-backend-project.herokuapp.com/api/enroll/updateEnrollForm",
+            {
+              params: {
+                id: element._id,
+                form_status: false,
+              },
+            }
+          );
+        }
+      });
+    },
   },
   mounted() {
     this.fetchData();
     this.fetchEnrollRule();
+    
   },
   components: {
     TimelineEvent,
-    Loading
-  }
+    Loading,
+  },
 };
 </script>
 

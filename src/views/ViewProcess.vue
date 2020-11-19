@@ -1,52 +1,135 @@
 <template>
-  <v-container class="mr-5">
-    <v-row v-if="loading == true" justify="center">
-      <Loading />
+  <v-contaner>
+    <v-row justify="center" class="mt-5">
+      <v-timeline align-top>
+        <v-timeline-item fill-dot>
+          <v-alert
+            value="true"
+            color="success"
+            icon="mdi-alert"
+            class="white--text"
+            dark
+          >
+            <div>
+              <span
+                >คำร้องของท่านถูกบันทึกในระบบแล้ว
+                โปรดติดตามสถานะการดำเนินการต่อไป.</span
+              >
+            </div>
+            <v-divider></v-divider>
+            <div>
+              <span>เวลา : {{ form.timestamps }} </span>
+            </div>
+          </v-alert>
+        </v-timeline-item>
+        <v-timeline-item fill-dot>
+          <v-alert
+            value="true"
+            color="gray"
+            icon="mdi-alert"
+            class="white--text elevation-2"
+          >
+            <div class="white">
+              <span>ขออนุมัติจากผู้เกี่ยวข้อง.</span>
+            </div>
+          </v-alert>
+        </v-timeline-item>
+        <v-timeline-item v-if="form.acception.advisor.accept">
+          <v-card color="purple darken-1" dark>
+            <v-card-title class="title"> อาจารย์ที่ปรึกษา </v-card-title>
+            <v-card-text class="white text--primary pa-9">
+              <v-row justify="center">
+                <v-col cols="12" sm="10"
+                  ><p>
+                    {{ form.acception.advisor.comment }}
+                  </p>
+                </v-col>
+                <v-col cols="12" sm="2" align-self="center">
+                  <v-icon color="purple" size="70" v-if="form.acception.advisor.approve">
+                     mdi-check-circle
+                  </v-icon>
+                  <v-icon color="red" size="70" v-else>
+                     mdi-chat-alert
+                  </v-icon>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+        <v-timeline-item v-if="form.acception.teacher.accept">
+          <v-card color="purple darken-1" dark>
+            <v-card-title class="title"> อาจารย์ผู้สอน </v-card-title>
+            <v-card-text class="white text--primary pa-9">
+              <v-row justify="center">
+                <v-col cols="12" sm="10"
+                  ><p>
+                    {{ form.acception.teacher.comment }}
+                  </p>
+                </v-col>
+                <v-col cols="12" sm="2" align-self="center">
+                  <v-icon color="purple" size="70" v-if="form.acception.teacher.approve">
+                     mdi-check-circle
+                  </v-icon>
+                  <v-icon color="red" size="70" v-else>
+                     mdi-chat-alert
+                  </v-icon>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+        <v-timeline-item v-if="form.acception.staff.accept">
+          <v-card color="purple darken-1" dark>
+            <v-card-title class="title"> เจ้าหน้าที่โครงการ </v-card-title>
+            <v-card-text class="white text--primary pa-9">
+              <v-row justify="center">
+                <v-col cols="12" sm="10"
+                  ><p>
+                    {{ form.acception.staff.comment }}
+                  </p>
+                </v-col>
+                <v-col cols="12" sm="2" align-self="center">
+                  <v-icon color="purple" size="70" v-if="form.acception.staff.approve">
+                     mdi-check-circle
+                  </v-icon>
+                  <v-icon color="red" size="70" v-else>
+                     mdi-chat-alert
+                  </v-icon>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+        <v-timeline-item v-if="form.acception.doyen.accept">
+          <v-card color="purple darken-1" dark>
+            <v-card-title class="title"> คณบดี </v-card-title>
+            <v-card-text class="white text--primary pa-9">
+              <v-row justify="center">
+                <v-col cols="12" sm="10"
+                  ><p>
+                    {{ form.acception.doyen.comment }}
+                  </p>
+                </v-col>
+                <v-col cols="12" sm="2" align-self="center">
+                  <v-icon color="purple" size="70" v-if="form.acception.doyen.approve">
+                     mdi-check-circle
+                  </v-icon>
+                  <v-icon color="red" size="70" v-else>
+                     mdi-chat-alert
+                  </v-icon>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+      </v-timeline>
     </v-row>
-    <v-row justify="center" align-content="center">
-      <v-col cols="12" sm="6">
-        <v-card class="pa-8">
-          <v-row>
-            <v-col cols="12" sm="12">
-              <h3>อาจารย์ที่ปรึกษา</h3>
-            </v-col>
-          </v-row>
-
-          <v-divider insert></v-divider>
-          <v-row>
-            <v-col cols="12" sm="6">
-              <h5>ชื่อ-สกุล :</h5>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <p>{{ form.owner_info.advisor }}</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6">
-              <h5>ความเห็นจากอาจารย์ที่ปรึกษา</h5>
-              <p>{{ form.acception.advisor.comment }}</p>
-              <p>วันที่ :{{ form.acception.advisor.time }}</p>
-            </v-col>
-            <v-col cols="12" sm="6" v-if="form.acception.advisor.approve == true"> 
-              <v-icon color="green " size="100">
-                mdi-checkbox-marked-circle-outline
-              </v-icon>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-      <v-col cols="12" sm="6"> </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="6"> </v-col>
-      <v-col cols="12" sm="6"> </v-col>
-    </v-row>
-  </v-container>
+  </v-contaner>
 </template>
 
 <script>
 import axios from "axios";
-import Loading from "../components/Loading2";
+// import Loading from "../components/Loading2";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 export default {
   name: "ViewProcess",
@@ -54,10 +137,28 @@ export default {
     return {
       form: this.$store.state.form_id_for_employee,
       loading: "",
+      accepStyle: [
+        {
+          color: "red lighten-2",
+          icon: "mdi-star",
+        },
+        {
+          color: "purple darken-1",
+          icon: "mdi-book-variant",
+        },
+        {
+          color: "green lighten-1",
+          icon: "mdi-airballoon",
+        },
+        {
+          color: "indigo",
+          icon: "mdi-buffer",
+        },
+      ],
     };
   },
   components: {
-    Loading,
+    // Loading,
   },
   methods: {
     // async fetchFormData() {
@@ -81,5 +182,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.white {
+  color: black;
+}
 </style>
