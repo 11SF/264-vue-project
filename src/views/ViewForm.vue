@@ -121,7 +121,7 @@
         </v-row>
       </v-card>
 
-      <v-card width="1096" class="pa-10" rounded v-if="$store.state.session_login['type'] == 'employee'">
+      <!-- <v-card width="1096" class="pa-10" rounded v-if="$store.state.session_login['type'] == 'employee'">
         <h3 class="mb-10">ส่วนสำหรับอาจารย์ที่ปรึกษา</h3>
         <v-divider></v-divider>
         <p>ยืนยันแบบฟอร์ม</p>
@@ -224,8 +224,8 @@
         <v-row justify="end">
           <v-btn color="green" @click="postData()" dark>ยืนยันข้อมูล</v-btn>
         </v-row>
-      </v-card>
-      
+      </v-card> -->
+
     </v-row>
   </v-container>
 </template>
