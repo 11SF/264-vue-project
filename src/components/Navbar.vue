@@ -7,7 +7,7 @@
 
       <!-- <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title> -->
       <v-spacer></v-spacer>
-      <v-toolbar-title>ระบบลงทะเบียนเรียนล้าช้า</v-toolbar-title>
+      <v-toolbar-title>ระบบลงทะเบียนเรียนล่าช้า</v-toolbar-title>
       <!-- <v-text v-if="$store.state.session_login['status'] == true">คุณ {{ $store.state.userData["displayname_th"] }}</v-text> -->
     </v-app-bar>
     

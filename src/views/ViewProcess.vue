@@ -1,6 +1,6 @@
 <template>
-  <v-contaner>
-    <v-row justify="center" class="mt-5">
+  <v-contaner class="container">
+    <!-- <v-row justify="center" class="mt-5"> -->
       <v-timeline align-top>
         <v-timeline-item fill-dot>
           <v-alert
@@ -22,15 +22,16 @@
             </div>
           </v-alert>
         </v-timeline-item>
-        <v-timeline-item fill-dot>
+        <v-timeline-item fill-dot v-if="alertIcon(form) == 'process'">
           <v-alert
             value="true"
-            color="gray"
+            color="yellow darken-2"
             icon="mdi-alert"
             class="white--text elevation-2"
+            dark
           >
-            <div class="white">
-              <span>ขออนุมัติจากผู้เกี่ยวข้อง.</span>
+            <div >
+              <span>กำลังขออนุมัติจากผู้เกี่ยวข้อง.</span>
             </div>
           </v-alert>
         </v-timeline-item>
@@ -43,14 +44,20 @@
                   ><p>
                     {{ form.acception.advisor.comment }}
                   </p>
+                  <v-divider></v-divider>
+                  <div>
+                    <span>เวลา : {{ form.acception.advisor.time }} </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" sm="2" align-self="center">
-                  <v-icon color="purple" size="70" v-if="form.acception.advisor.approve">
-                     mdi-check-circle
+                  <v-icon
+                    color="purple"
+                    size="70"
+                    v-if="form.acception.advisor.approve"
+                  >
+                    mdi-check-circle
                   </v-icon>
-                  <v-icon color="red" size="70" v-else>
-                     mdi-chat-alert
-                  </v-icon>
+                  <v-icon color="red" size="70" v-else> mdi-chat-alert </v-icon>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -65,14 +72,20 @@
                   ><p>
                     {{ form.acception.teacher.comment }}
                   </p>
+                  <v-divider></v-divider>
+                  <div>
+                    <span>เวลา : {{ form.acception.teacher.time }} </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" sm="2" align-self="center">
-                  <v-icon color="purple" size="70" v-if="form.acception.teacher.approve">
-                     mdi-check-circle
+                  <v-icon
+                    color="purple"
+                    size="70"
+                    v-if="form.acception.teacher.approve"
+                  >
+                    mdi-check-circle
                   </v-icon>
-                  <v-icon color="red" size="70" v-else>
-                     mdi-chat-alert
-                  </v-icon>
+                  <v-icon color="red" size="70" v-else> mdi-chat-alert </v-icon>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -87,14 +100,20 @@
                   ><p>
                     {{ form.acception.staff.comment }}
                   </p>
+                  <v-divider></v-divider>
+                  <div>
+                    <span>เวลา : {{ form.acception.staff.time }} </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" sm="2" align-self="center">
-                  <v-icon color="purple" size="70" v-if="form.acception.staff.approve">
-                     mdi-check-circle
+                  <v-icon
+                    color="purple"
+                    size="70"
+                    v-if="form.acception.staff.approve"
+                  >
+                    mdi-check-circle
                   </v-icon>
-                  <v-icon color="red" size="70" v-else>
-                     mdi-chat-alert
-                  </v-icon>
+                  <v-icon color="red" size="70" v-else> mdi-chat-alert </v-icon>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -109,21 +128,66 @@
                   ><p>
                     {{ form.acception.doyen.comment }}
                   </p>
+                  <v-divider></v-divider>
+                  <div>
+                    <span>เวลา : {{ form.acception.doyen.time }} </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" sm="2" align-self="center">
-                  <v-icon color="purple" size="70" v-if="form.acception.doyen.approve">
-                     mdi-check-circle
+                  <v-icon
+                    color="purple"
+                    size="70"
+                    v-if="form.acception.doyen.approve"
+                  >
+                    mdi-check-circle
                   </v-icon>
-                  <v-icon color="red" size="70" v-else>
-                     mdi-chat-alert
-                  </v-icon>
+                  <v-icon color="red" size="70" v-else> mdi-chat-alert </v-icon>
                 </v-col>
               </v-row>
             </v-card-text>
           </v-card>
         </v-timeline-item>
+        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot>
+          <v-alert
+            value="true"
+            color="success"
+            icon="mdi-alert"
+            class="white--text elevation-2"
+            dark
+          >
+            <div>
+              <span>คำร้องได้รับการอนุมัติเรียบร้อย.</span>
+            </div>
+          </v-alert>
+        </v-timeline-item>
+        <v-timeline-item v-if="alertIcon(form) == 'warning'" fill-dot>
+          <v-alert
+            value="true"
+            color="red darken-2"
+            icon="mdi-alert"
+            class="white--text elevation-2"
+            dark
+          >
+            <div>
+              <span>คำร้องได้รับการปฏิเสธ</span>
+            </div>
+          </v-alert>
+        </v-timeline-item>
+        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot>
+          <v-alert
+            value="true"
+            color="yellow darken-2"
+            icon="mdi-alert"
+            class="white--text elevation-2"
+            dark
+          >
+            <div>
+              <span>กรุณาดำเนินการชำระเงิน</span>
+            </div>
+          </v-alert>
+        </v-timeline-item>
       </v-timeline>
-    </v-row>
+    <!-- </v-row> -->
   </v-contaner>
 </template>
 
@@ -175,6 +239,27 @@ export default {
     //   this.loading = false;
     //   this.form = res.data;
     // }
+    alertIcon(form) {
+      if (form.form_status) {
+        return "success";
+      } else if (
+        form.acception.advisor.accept &&
+        !form.acception.advisor.approve
+      ) {
+        return "warning";
+      } else if (form.acception.staff.accept && !form.acception.staff.approve) {
+        return "warning";
+      } else if (
+        form.acception.teacher.accept &&
+        !form.acception.teacher.approve
+      ) {
+        return "warning";
+      } else if (form.acception.doyen.accept && !form.acception.doyen.approve) {
+        return "warning";
+      } else {
+        return "process";
+      }
+    },
   },
   mounted() {
     this.fetchFormData();
@@ -183,7 +268,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.white {
-  color: black;
+.container {
+  margin: 0 auto;
+  width: 1080px;
 }
 </style>

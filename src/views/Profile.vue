@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <v-row justify="center" align-content="center">
+  <div class="container">
+    <!-- <v-row justify="center" align-content="center"> -->
       
         <v-sheet
           rounded
           elevation="4"
-          max-width="1200"
+          
           class="pa-12 ml-12 my-12"
         >
         <v-col cols="12" sm="12">
@@ -46,7 +46,7 @@
           </v-row>
         </v-sheet>
      
-    </v-row>
+    <!-- </v-row> -->
   </div>
 </template>
 
@@ -61,12 +61,17 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .avatar {
   border-radius: 100%;
   background: yellow;
   /* max-width: 30px; */
   width: 150px;
   height: 150px;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+
 }
 </style>

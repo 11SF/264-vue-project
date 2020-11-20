@@ -120,6 +120,112 @@
           <v-btn color="green" @click="postData()" dark>ยืนยันข้อมูล</v-btn>
         </v-row>
       </v-card>
+
+      <v-card width="1096" class="pa-10" rounded v-if="$store.state.session_login['type'] == 'employee'">
+        <h3 class="mb-10">ส่วนสำหรับอาจารย์ที่ปรึกษา</h3>
+        <v-divider></v-divider>
+        <p>ยืนยันแบบฟอร์ม</p>
+        <v-form>
+          <v-row>
+            <v-col cols="12" sm="8">
+              <v-text-field label="ชื่อ-สกุล"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-select
+                v-model="approve"
+                :items="items"
+                :rules="itemRequest"
+                label="อนุมัติ/ไม่อนุมัติ"
+                required
+              >
+              </v-select>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-textarea
+                
+                label="ความเห็น"
+                v-model="comment"
+              >
+              </v-textarea>
+            </v-col>
+          </v-row>
+        </v-form>
+
+        <v-row justify="end">
+          <v-btn color="green" @click="postData()" dark>ยืนยันข้อมูล</v-btn>
+        </v-row>
+      </v-card>
+
+      <v-card width="1096" class="pa-10" rounded v-if="$store.state.session_login['type'] == 'employee'">
+        <h3 class="mb-10">ส่วนสำหรับอาจารย์ที่ปรึกษา</h3>
+        <v-divider></v-divider>
+        <p>ยืนยันแบบฟอร์ม</p>
+        <v-form>
+          <v-row>
+            <v-col cols="12" sm="8">
+              <v-text-field label="ชื่อ-สกุล"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-select
+                v-model="approve"
+                :items="items"
+                :rules="itemRequest"
+                label="อนุมัติ/ไม่อนุมัติ"
+                required
+              >
+              </v-select>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-textarea
+                
+                label="ความเห็น"
+                v-model="comment"
+              >
+              </v-textarea>
+            </v-col>
+          </v-row>
+        </v-form>
+
+        <v-row justify="end">
+          <v-btn color="green" @click="postData()" dark>ยืนยันข้อมูล</v-btn>
+        </v-row>
+      </v-card>
+
+      <v-card width="1096" class="pa-10" rounded v-if="$store.state.session_login['type'] == 'employee'">
+        <h3 class="mb-10">ส่วนสำหรับอาจารย์ที่ปรึกษา</h3>
+        <v-divider></v-divider>
+        <p>ยืนยันแบบฟอร์ม</p>
+        <v-form>
+          <v-row>
+            <v-col cols="12" sm="8">
+              <v-text-field label="ชื่อ-สกุล"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-select
+                v-model="approve"
+                :items="items"
+                :rules="itemRequest"
+                label="อนุมัติ/ไม่อนุมัติ"
+                required
+              >
+              </v-select>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <v-textarea
+                
+                label="ความเห็น"
+                v-model="comment"
+              >
+              </v-textarea>
+            </v-col>
+          </v-row>
+        </v-form>
+
+        <v-row justify="end">
+          <v-btn color="green" @click="postData()" dark>ยืนยันข้อมูล</v-btn>
+        </v-row>
+      </v-card>
+      
     </v-row>
   </v-container>
 </template>
