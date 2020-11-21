@@ -1,12 +1,13 @@
 <template>
   <v-contaner class="container">
+
     <!-- <v-row justify="center" class="mt-5"> -->
       <v-timeline align-top>
-        <v-timeline-item fill-dot>
+        <v-timeline-item fill-dot icon="mdi-checkbox-multiple-marked-outline" icon-color="white" color="success">
           <v-alert
             value="true"
             color="success"
-            icon="mdi-alert"
+            icon="mdi-checkbox-multiple-marked-outline"
             class="white--text"
             dark
           >
@@ -22,11 +23,11 @@
             </div>
           </v-alert>
         </v-timeline-item>
-        <v-timeline-item fill-dot v-if="alertIcon(form) == 'process'">
+        <v-timeline-item fill-dot v-if="alertIcon(form) == 'process'" color="yellow darken-2" icon="mdi-clock-time-ten-outline">
           <v-alert
             value="true"
             color="yellow darken-2"
-            icon="mdi-alert"
+            icon="mdi-clock-time-ten-outline"
             class="white--text elevation-2"
             dark
           >
@@ -41,7 +42,11 @@
             <v-card-text class="white text--primary pa-9">
               <v-row justify="center">
                 <v-col cols="12" sm="10"
-                  ><p>
+                  >
+                  <h5>
+                    {{ form.owner_info.advisor }}
+                  </h5>
+                  <p>
                     {{ form.acception.advisor.comment }}
                   </p>
                   <v-divider></v-divider>
@@ -69,7 +74,11 @@
             <v-card-text class="white text--primary pa-9">
               <v-row justify="center">
                 <v-col cols="12" sm="10"
-                  ><p>
+                  >
+                  <h5>
+                    {{ form.acception.teacher.name }}
+                  </h5>
+                  <p>
                     {{ form.acception.teacher.comment }}
                   </p>
                   <v-divider></v-divider>
@@ -97,7 +106,11 @@
             <v-card-text class="white text--primary pa-9">
               <v-row justify="center">
                 <v-col cols="12" sm="10"
-                  ><p>
+                  >
+                  <h5>
+                    {{ form.acception.staff.name }}
+                  </h5>
+                  <p>
                     {{ form.acception.staff.comment }}
                   </p>
                   <v-divider></v-divider>
@@ -125,7 +138,11 @@
             <v-card-text class="white text--primary pa-9">
               <v-row justify="center">
                 <v-col cols="12" sm="10"
-                  ><p>
+                  >
+                  <h5>
+                    {{ form.acception.doyen.name }}
+                  </h5>
+                  <p>
                     {{ form.acception.doyen.comment }}
                   </p>
                   <v-divider></v-divider>
@@ -147,11 +164,11 @@
             </v-card-text>
           </v-card>
         </v-timeline-item>
-        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot>
+        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot color="success" icon="mdi-clipboard-check-multiple-outline" dark>
           <v-alert
             value="true"
             color="success"
-            icon="mdi-alert"
+            icon="mdi-clipboard-check-multiple-outline"
             class="white--text elevation-2"
             dark
           >
@@ -160,7 +177,7 @@
             </div>
           </v-alert>
         </v-timeline-item>
-        <v-timeline-item v-if="alertIcon(form) == 'warning'" fill-dot>
+        <v-timeline-item v-if="alertIcon(form) == 'warning'" fill-dot color="red darken-2" icon="mdi-alert" dark>
           <v-alert
             value="true"
             color="red darken-2"
@@ -173,11 +190,11 @@
             </div>
           </v-alert>
         </v-timeline-item>
-        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot>
+        <v-timeline-item v-if="alertIcon(form) == 'success'" fill-dot color="yellow darken-2" icon="mdi-cash-usd-outline" dark>
           <v-alert
             value="true"
             color="yellow darken-2"
-            icon="mdi-alert"
+            icon="mdi-cash-usd-outline"
             class="white--text elevation-2"
             dark
           >
@@ -188,6 +205,7 @@
         </v-timeline-item>
       </v-timeline>
     <!-- </v-row> -->
+
   </v-contaner>
 </template>
 

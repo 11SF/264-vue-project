@@ -22,13 +22,13 @@ export default {
 
   components: {
     Navbar,
-    NavigationDrawer
+    NavigationDrawer,
     // Footer
   },
   data() {
     return {
       drawer: false,
-      couter: 0
+      couter: 0,
     };
   },
   methods: {
@@ -37,8 +37,8 @@ export default {
     },
     reset() {
       this.drawer = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

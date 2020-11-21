@@ -57,43 +57,48 @@ export default {
     return {
       login_data: {
         username: "",
-        password: ""
+        password: "",
       },
       user_data: this.$store.state.session_login,
-      inprocess: false
+      inprocess: false,
     };
   },
   components: {
-    Loading
+    Loading,
   },
 
   methods: {
     async authAPI() {
-      this.inprocess = true
+      this.inprocess = true;
       let userData = await axios.post(
         "https://cs264-backend-project.herokuapp.com/api/user/identify",
         this.login_data
       );
-      this.inprocess = false
+      this.inprocess = false;
       console.log(userData.data);
       this.$store.state.userData = userData.data;
 
-      if (this.$store.state.userData["status"] == true && this.$store.state.userData["type"] == 'student') {
+      if (
+        this.$store.state.userData["status"] == true &&
+        this.$store.state.userData["type"] == "student"
+      ) {
         this.$router.push("/");
         let data = {
           username: this.$store.state.userData["username"],
           status: this.$store.state.userData["status"],
-          type: this.$store.state.userData["type"]
+          type: this.$store.state.userData["type"],
         };
         this.$session.set("login_session", data);
         this.$store.state.session_login = this.$session.get("login_session");
-      }
-      else if(this.$store.state.userData["status"] == true && this.$store.state.userData["type"] == 'employee') {
+      } else if (
+        this.$store.state.userData["status"] == true &&
+        this.$store.state.userData["type"] == "employee"
+      ) {
         this.$router.push("/");
         let data = {
           username: this.$store.state.userData["displayname_th"],
           status: this.$store.state.userData["status"],
-          type: this.$store.state.userData["type"]
+          type: this.$store.state.userData["type"],
         };
         this.$session.set("login_session", data);
         this.$store.state.session_login = this.$session.get("login_session");
@@ -101,9 +106,9 @@ export default {
     },
     reloadApp() {
       this.vm.$forceUpdate();
-    }
+    },
   },
-  watch: {}
+  watch: {},
 };
 </script>
 

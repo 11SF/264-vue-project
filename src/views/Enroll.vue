@@ -288,7 +288,6 @@ export default {
   mounted() {
     this.fetchData();
     this.fetchEnrollRule();
-    
   },
   components: {
     TimelineEvent,

@@ -7,7 +7,9 @@ import Enroll from "../views/Enroll.vue";
 import EnrollForm from "../views/EnrollForm.vue";
 import LoginStaff from "../views/LoginStaff.vue";
 import ViewForm from "../views/ViewForm.vue";
-import ViewProcess from "../views/ViewProcess.vue"
+import ViewProcess from "../views/ViewProcess.vue";
+import StaffDashboard from "../views/StaffDashboard.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -68,13 +70,18 @@ const routes = [
   {
     path: "/viewform",
     name: "ViewForm",
-    component: ViewForm
+    component: ViewForm,
   },
   {
     path: "/viewprocess",
     name: "ViewProcess",
-    component: ViewProcess
-  }
+    component: ViewProcess,
+  },
+  {
+    path: "/staff/dashboard",
+    name: "StaffDashboard",
+    component: StaffDashboard,
+  },
 ];
 
 const router = new VueRouter({

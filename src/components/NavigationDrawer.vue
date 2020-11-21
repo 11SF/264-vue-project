@@ -1,14 +1,17 @@
 <template>
   <v-navigation-drawer absolute permanent expand-on-hover>
-    <v-list-item v-if="$store.state.session_login['status'] == true" class="ml-2  pa-0 pt-2">
+    <v-list-item
+      v-if="$store.state.session_login['status'] == true"
+      class="ml-2 pa-0 pt-2"
+    >
       <v-list-item-avatar>
-        <v-icon size="40" color="blue" >mdi-account-circle</v-icon>
+        <v-icon size="40" color="blue">mdi-account-circle</v-icon>
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title> {{
-          $store.state.userData["displayname_th"]
-        }}</v-list-item-title>
+        <v-list-item-title>
+          {{ $store.state.userData["displayname_th"] }}</v-list-item-title
+        >
       </v-list-item-content>
     </v-list-item>
 
@@ -26,8 +29,6 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
-        
-          
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -63,6 +64,15 @@ export default {
           link: this.goEnroll
         },
         { title: "ออกจากระบบ", icon: "mdi-logout", link: this.logOut }
+      ],items_staff: [
+        { title: "หน้าแรก", icon: "mdi-view-dashboard", link: this.goHome },
+        { title: "ข้อมูลส่วนตัว", icon: "mdi-account-box-multiple", link: this.goProfile },
+        {
+          title: "ตรวจสอบคำร้องการลงทะเบียน",
+          icon: "mdi-pencil-plus",
+          link: this.goDashboard
+        },
+        { title: "ออกจากระบบ", icon: "mdi-logout", link: this.logOut }
       ],
       test: true
     };
@@ -73,6 +83,8 @@ export default {
         return this.items_student;
       } else if(this.$store.state.session_login["status"] == true && this.$store.state.session_login['type'] == 'employee') {
         return this.items_employee;
+      } else if(this.$store.state.session_login["status"] == true && this.$store.state.session_login['type'] == 'staff') {
+        return this.items_staff;
       } else {
         return this.items_guest;
       }
@@ -122,6 +134,11 @@ export default {
         this.logOut();
         this.vm.$forceUpdate();
       }
+    },
+    goDashboard() {
+      this.$router.push({
+        name: "StaffDashboard"
+      });
     }
   }
 };

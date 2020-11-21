@@ -145,18 +145,14 @@
               >
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                :rules="itemRequest"
-                v-model="form_data.subject_info.teacher_name"
-                label="อาจารย์ผู้สอน"
-              >
-              </v-text-field>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-textarea :rules="itemRequest" label="เหตุผลที่ยื่นคำร้อง" v-model="form_data.reason">
+              <v-textarea
+                :rules="itemRequest"
+                label="เหตุผลที่ยื่นคำร้อง"
+                v-model="form_data.reason"
+              >
               </v-textarea>
             </v-col>
           </v-row>
@@ -187,11 +183,11 @@ export default {
             no: "",
             sub_district: "",
             district: "",
-            province: ""
+            province: "",
           },
           tel_number: "",
           parents_tel_number: "",
-          advisor: ""
+          advisor: "",
         },
         subject_info: {
           semester: "",
@@ -199,13 +195,13 @@ export default {
           subject_name: "",
           subject_id: "",
           section: "",
-          teacher_name: ""
+          teacher_name: "",
         },
         reason: "",
-        timestamps: ""
+        timestamps: "",
       },
-      itemRequest: [v => !!v || "Item is required"],
-      valid: false
+      itemRequest: [(v) => !!v || "Item is required"],
+      valid: false,
     };
   },
 
@@ -214,6 +210,7 @@ export default {
       this.$refs.form.validate();
       // this.saveForm();
     },
+    // "http://localhost:5000/api/enroll/submitEnrollForm",
     async saveForm() {
       this.getCurrentTime();
       let res = await axios.post(
@@ -225,18 +222,24 @@ export default {
         name: "Enroll",
         params: {
           status: this.$store.state.session_login["status"],
-          username: this.$store.state.session_login["username"]
-        }
+          username: this.$store.state.session_login["username"],
+        },
       });
     },
     getCurrentTime() {
       const today = new Date();
-      const date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      const time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const dateTime = date + " " + time;
       this.form_data.timestamps = dateTime;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

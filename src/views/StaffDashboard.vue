@@ -1,0 +1,276 @@
+<template>
+  <v-row class="container-row">
+    <v-col cols="12" sm="2">
+      <v-card
+        color="light-blue"
+        dark
+        link
+        @click="
+          (formDisplay = formData), (titleDisplay = 'ใบคำร้องลงทะเบียนทั้งหมด')
+        "
+      >
+        <v-card-title class="text-right">ใบคำร้องลงทะเบียนทั้งหมด</v-card-title>
+        <v-card-text>
+          <h2>{{ formData.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="4">
+      <v-card
+        color="blue-grey"
+        dark
+        link
+        @click="
+          (formDisplay = formUnseen),
+            (titleDisplay = 'ใบคำร้องที่ยังไม่ตรวจ'),
+            (lastSelect = 'formUnseen')
+        "
+      >
+        <v-card-title class="text-right">ใบคำร้องที่ยังไม่ตรวจ</v-card-title>
+        <v-card-text>
+          <h2>{{ formUnseen.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="2">
+      <v-card
+        color="yellow darken-1"
+        dark
+        link
+        @click="
+          (formDisplay = formWaitAccept),
+            (titleDisplay = 'ใบคำร้องที่รอการอนุมัติ')
+        "
+      >
+        <v-card-title class="text-right">ใบคำร้องที่รอการอนุมัติ</v-card-title>
+        <v-card-text>
+          <h2>{{ formWaitAccept.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="2">
+      <v-card
+        color="red"
+        dark
+        link
+        @click="
+          (formDisplay = formNotApprove),
+            (titleDisplay = 'ใบคำร้องที่ไม่ผ่านการอนุมัติ')
+        "
+      >
+        <v-card-title class="text-right"
+          >ใบคำร้องที่ไม่ผ่านการอนุมัติ</v-card-title
+        >
+        <v-card-text>
+          <h2>{{ formNotApprove.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="2">
+      <v-card
+        color="success"
+        dark
+        link
+        @click="
+          (formDisplay = formAllApprove),
+            (titleDisplay = 'ใบคำร้องที่ผ่านการอนุมัติ')
+        "
+      >
+        <v-card-title class="text-right"
+          >ใบคำร้องที่ผ่านการอนุมัติ</v-card-title
+        >
+        <v-card-text>
+          <h2>{{ formAllApprove.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="4">
+      <v-card
+        color="cyan"
+        dark
+        link
+        @click="
+          (formDisplay = formWaitPayment), (titleDisplay = 'รอการชำระเงิน')
+        "
+      >
+        <v-card-title class="text-right">รอการชำระเงิน</v-card-title>
+        <v-card-text>
+          <h2>{{ formWaitPayment.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="5">
+      <v-card
+        color="indigo"
+        dark
+        link
+        @click="
+          (formDisplay = formWaitCheckPayment),
+            (titleDisplay = 'รอเจ้าหน้าที่ยืนยันการชำระเงิน')
+        "
+      >
+        <v-card-title class="text-right"
+          >รอเจ้าหน้าที่ยืนยันการชำระเงิน</v-card-title
+        >
+        <v-card-text>
+          <h2>{{ formWaitCheckPayment.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="3">
+      <v-card
+        color="success"
+        dark
+        link
+        @click="(formDisplay = formFinish), (titleDisplay = 'เสร็จสิ้น')"
+      >
+        <v-card-title class="text-right">เสร็จสิ้น</v-card-title>
+        <v-card-text>
+          <h2>{{ formFinish.length }}</h2>
+        </v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="12" v-if="formDisplay != null">
+      <h2>{{ titleDisplay }}</h2>
+      <p>{{ formDisplay.length }} รายการ</p>
+    </v-col>
+    <v-col cols="12" sm="12">
+      <v-card class="text-center pa-5">
+        <h4 class="pa-12" v-if="formDisplay == null">ไม่มีข้อมูล</h4>
+        <v-expansion-panels v-else>
+          <v-expansion-panel v-for="form in formDisplay" :key="form" class="">
+            <v-expansion-panel-header>
+              <v-row>
+                <v-col>
+                  <h6>ชื่อวิชา : {{ form.subject_info.subject_name }}</h6>
+                  <p>ผู้ยื่นคำร้อง : {{ form.owner_info.name }}</p>
+                </v-col>
+                <v-col>
+                  <p>รหัสวิชา : {{ form.subject_info.subject_id }}</p>
+                  <p>เวลาที่ยื่นคำร้อง : {{ form.timestamps }}</p>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-col cols="6" sm="2">
+                  <v-btn
+                    color="primary"
+                    dark
+                    @click="
+                      goViewForm(), ($store.state.form_id_for_employee = form)
+                    "
+                  >
+                    ตรวจสอบใบคำร้อง
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-card>
+    </v-col>
+  </v-row>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "StaffDashboardS",
+  data() {
+    return {
+      formData: "",
+      formUnseen: [],
+      formWaitAccept: [],
+      formAllApprove: [],
+      formNotApprove: [],
+      formFinish: [],
+      formWaitPayment: [],
+      formWaitCheckPayment: [],
+      formDisplay: null,
+      titleDisplay: null,
+      lastSelect: "",
+    };
+  },
+  methods: {
+    async fetchAllForm() {
+      this.formData = "Loading...";
+      let res = await axios.get(
+        "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
+        {
+          params: {
+            select: 9,
+          },
+        }
+      );
+      this.formData = res.data;
+      this.formData.forEach((element) => {
+        if (element.acception.staff.accept) {
+          if (
+            element.acception.advisor.accept &&
+            element.acception.teacher.accept &&
+            element.acception.doyen.accept
+          ) {
+            if (
+              element.acception.advisor.approve &&
+              element.acception.staff.approve &&
+              element.acception.teacher.approve &&
+              element.acception.doyen.approve &&
+              !element.pay_money_state
+            ) {
+              this.formAllApprove.push(element);
+            }
+          } else {
+            if (
+              !element.acception.advisor.approve &&
+              !element.acception.staff.approve &&
+              !element.acception.teacher.approve &&
+              !element.acception.doyen.approve
+            ) {
+              this.formNotApprove.push(element);
+            } else {
+              this.formWaitAccept.push(element);
+            }
+          }
+        } else {
+          this.formUnseen.push(element);
+        }
+      });
+      this.formData.forEach((element) => {
+        if (element.form_status) {
+          this.formFinish.push(element);
+        }
+        if (element.pay_money) {
+          this.formWaitCheckPayment.push(element);
+        }
+        if (element.pay_money_state) {
+          this.formWaitPayment.push(element);
+        }
+      });
+    },
+    goViewForm() {
+      this.$router.push("/viewform");
+    },
+  },
+  mounted() {
+    this.fetchAllForm();
+  },
+};
+</script>
+
+<style scoped>
+.container {
+  max-width: 960px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-row {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+</style>
