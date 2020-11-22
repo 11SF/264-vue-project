@@ -164,6 +164,18 @@
                     ตรวจสอบใบคำร้อง
                   </v-btn>
                 </v-col>
+                <v-col cols="6" sm="2">
+                      <v-btn
+                        color="green"
+                        dark
+                        @click="
+                          goViewProcess(),
+                            ($store.state.form_id_for_employee = form)
+                        "
+                      >
+                        ตรวจสอบสถานะ
+                      </v-btn>
+                    </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -250,6 +262,9 @@ export default {
     },
     goViewForm() {
       this.$router.push("/viewform");
+    },
+    goViewProcess() {
+      this.$router.push("/viewprocess");
     },
   },
   mounted() {

@@ -2,7 +2,7 @@
   <div class="container">
     <!-- <v-row justify="center" align-content="center"> -->
 
-    <v-sheet rounded elevation="4" class="pa-12 ml-12 my-12">
+    <v-sheet rounded elevation="4" class="pa-12 my-12">
       <v-col cols="12" sm="12">
         <h1>ข้อมูลส่วนตัว</h1>
       </v-col>
@@ -63,7 +63,7 @@ export default {
   height: 150px;
 }
 .container {
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 </style>

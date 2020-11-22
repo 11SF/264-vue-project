@@ -6,10 +6,10 @@
       src="https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
       gradient="to right left, rgba(100,115,201,.33), rgba(25,32,72,.7)"
     >
-      <v-container>
-        <v-row align-content="center" justify="center">
-          <v-col></v-col>
-          <v-col>
+      
+        <v-row align-content="center" justify="end">
+          
+          <v-col cols="12" sm="6">
             <h1 class="text-center">ยินดีต้อนรับ</h1>
             <v-divider dark insert></v-divider>
             <h4 class="text-center">
@@ -35,9 +35,11 @@
             </v-row>
           </v-col>
         </v-row>
-      </v-container>
+      
     </v-parallax>
-    <TimelineProcess />
+    <div class="container-content">
+      <TimelineProcess />
+    </div>
   </div>
 </template>
 
@@ -51,3 +53,10 @@ export default {
   },
 };
 </script>
+
+<style  scoped>
+.container-content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+</style>

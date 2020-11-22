@@ -42,6 +42,16 @@
             </v-card>
           </v-dialog>
         </v-row>
+        <v-row justify="end" >
+          <v-col cols="12" sm="4" align-self="center">
+            <v-select
+              :items="item_employee"
+              label="ตรวจสอบในนาม"
+              v-model="employee_select"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="1" align-self="center"><v-btn @click="fetchData()" color="info">ยืนยัน</v-btn></v-col>
+        </v-row>
 
         <v-row justify="center">
           <v-sheet
@@ -128,6 +138,18 @@
                         ตรวจสอบใบคำร้อง
                       </v-btn>
                     </v-col>
+                    <v-col cols="6" sm="2">
+                      <v-btn
+                        color="green"
+                        dark
+                        @click="
+                          goViewProcess(),
+                            ($store.state.form_id_for_employee = form)
+                        "
+                      >
+                        ตรวจสอบสถานะ
+                      </v-btn>
+                    </v-col>
                   </v-row>
                   <div class="">
                     <v-overlay :value="overlay">
@@ -174,16 +196,43 @@ export default {
       sheet: false,
       overlay: false,
       dialog: "",
+      item_employee: ["อาจารย์ที่ปรึกษา", "อาจารย์ผู้สอน", "คณบดี"],
+      employee_select: ''
     };
   },
   methods: {
     async fetchData() {
-      if (this.$store.state.session_login["type"] == "employee") {
+      this.forms = ''
+      if (this.$store.state.session_login["type"] == "employee" && this.employee_select == 'อาจารย์ที่ปรึกษา') {
         const res = await axios.get(
           "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
           {
             params: {
               select: 3,
+              name: this.$store.state.userData["displayname_th"],
+              accept: false, //accept status select
+            },
+          }
+        );
+        this.forms = res.data;
+      } else if(this.$store.state.session_login["type"] == "employee" && this.employee_select == 'อาจารย์ผู้สอน') {
+        const res = await axios.get(
+          "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
+          {
+            params: {
+              select: 5,
+              name: this.$store.state.userData["displayname_th"],
+              accept: false, //accept status select
+            },
+          }
+        );
+        this.forms = res.data;
+      } else if(this.$store.state.session_login["type"] == "employee" && this.employee_select == 'คณบดี') {
+        const res = await axios.get(
+          "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
+          {
+            params: {
+              select: 6,
               name: this.$store.state.userData["displayname_th"],
               accept: false, //accept status select
             },
@@ -286,7 +335,8 @@ export default {
     },
   },
   mounted() {
-    this.fetchData();
+    if(this.$store.state.session_login["type"] == "student")
+      this.fetchData();
     this.fetchEnrollRule();
   },
   components: {

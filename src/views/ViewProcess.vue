@@ -1,5 +1,5 @@
 <template>
-  <v-contaner class="container">
+  <div class="container">
 
     <!-- <v-row justify="center" class="mt-5"> -->
       <v-timeline align-top>
@@ -206,7 +206,7 @@
       </v-timeline>
     <!-- </v-row> -->
 
-  </v-contaner>
+  </div>
 </template>
 
 <script>
@@ -285,7 +285,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 .container {
   margin: 0 auto;
   width: 1080px;

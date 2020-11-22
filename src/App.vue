@@ -1,28 +1,23 @@
 <template>
   <v-app>
-    <Navbar @onClickToggle="toggle" />
-
-    <router-view />
-
-    <v-container class="fill-height">
-      <NavigationDrawer :onClickToggle="drawer" @resetToggle="reset" />
-    </v-container>
-    <!-- <v-content>
-      
-    </v-content> -->
+    <Navbar />
+    <v-content class="content">
+      <router-view />
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import NavigationDrawer from "./components/NavigationDrawer";
+// import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar.vue';
+// import NavigationDrawer from "./components/NavigationDrawer";
 
 export default {
   name: "App",
 
   components: {
-    Navbar,
-    NavigationDrawer,
+    Navbar
+    // NavigationDrawer,
     // Footer
   },
   data() {
@@ -46,5 +41,8 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap");
 * {
   font-family: "Kanit", sans-serif;
+}
+.content {
+  margin: 55px 0 0 0;
 }
 </style>

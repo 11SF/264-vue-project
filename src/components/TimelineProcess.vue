@@ -13,9 +13,9 @@
           <v-container>
             <v-row>
               <v-col class="hidden-sm-and-down" md="2">
-                <v-icon size="64"> mdi-server-network </v-icon>
+                <v-icon size="50"> mdi-server-network </v-icon>
               </v-col>
-              <v-col cols="12" md="10">
+              <v-col cols="12" md="10" align-self="center">
                 เข้าสู่ระบบด้วยบัญชีผู้ใช้ของมหาลัยธรรมศาสตร์
               </v-col>
             </v-row>
@@ -26,10 +26,11 @@
       <v-timeline-item color="purple lighten-2" fill-dot right>
         <v-card>
           <v-card-title class="purple lighten-2">
-            <v-icon dark size="42" class="mr-4"> mdi-magnify </v-icon>
-            <h2 class="display-1 white--text font-weight-light">
+            
+            <p class="display-1 white--text font-weight-light">
               เพิ่มรายวิชาที่ต้องการลงทะเบียน
-            </h2>
+            </p>
+            
           </v-card-title>
           <v-container>
             <v-row>
@@ -37,7 +38,7 @@
                 เพิ่มรายวิชาและกรอกข้อมูลในแบบฟอร์มให้ครบถ้วนและถูกต้องจากนั้นกดยืนยัน
               </v-col>
               <v-col class="hidden-sm-and-down text-right" md="2">
-                <v-icon size="64"> mdi-calendar-text </v-icon>
+                <v-icon size="40"> mdi-calendar-text </v-icon>
               </v-col>
             </v-row>
           </v-container>
