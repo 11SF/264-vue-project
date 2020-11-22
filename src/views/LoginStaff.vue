@@ -3,10 +3,10 @@
     <div class="login-wrapper">
       <form>
         <div class="form-group">
-          <h3>เข้าสู่ระบบ (นักศึกษา/บุคคลากร)</h3>
+          <h3>เข้าสู่ระบบ (เจ้าหน้าที่โครงการ)</h3>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1">รหัสนักศึกษา / รหัสผู้ใช้</label>
+          <label for="exampleInputEmail1">รหัสผู้ใช้</label>
           <input
             type="text"
             class="form-control"
@@ -28,7 +28,7 @@
           type="warning"
           v-if="$store.state.userData['status'] == 'FALSE'"
         >
-          {{ $store.state.userData["message"] }}
+          หรัสผู้ใช้ / รหัสผ่าน ไม่ถูกต้อง
         </v-alert>
         <div class="form-group submit-area">
           <a @click="goLogin()">เข้าสู่ระบบสำหรับผู้ใช้ทั่วไป</a>
