@@ -204,14 +204,17 @@
                   sm="2"
                   v-if="titleDisplay == 'ใบคำร้องที่ไม่ผ่านการอนุมัติ'"
                 >
-                  <v-btn
-                    color="red"
-                    dark
-                    @click="
-                      completeForm(form)
-                    "
-                  >
+                  <v-btn color="red" dark @click="completeForm(form)">
                     เสร็จสิ้นคำร้อง
+                  </v-btn>
+                </v-col>
+                <v-col
+                  cols="6"
+                  sm="2"
+                  v-if="titleDisplay == 'ใบคำร้องที่ผ่านการอนุมัติ'"
+                >
+                  <v-btn color="primary" dark @click="goPayment(form)">
+                    ขั้นตอนจ่ายเงิน
                   </v-btn>
                 </v-col>
               </v-row>
@@ -257,62 +260,67 @@ export default {
       );
       this.formData = res.data;
       this.formData.forEach((element) => {
-        if (element.acception.staff.accept) {
-          if (
-            element.acception.advisor.accept &&
-            element.acception.teacher.accept &&
-            element.acception.doyen.accept
-          ) {
-            if (
-              element.acception.advisor.approve &&
-              element.acception.staff.approve &&
-              element.acception.teacher.approve &&
-              element.acception.doyen.approve
-            ) {
-              this.formAllApprove.push(element);
-            } else {
-              this.formNotApprove.push(element);
-            }
-          } else {
+        if (element.form_status == false) {
+          if (element.acception.staff.accept) {
             if (
               element.acception.advisor.accept &&
-              !element.acception.advisor.approve
-            ) {
-              this.formNotApprove.push(element);
-            } else if (
-              element.acception.staff.accept &&
-              !element.acception.staff.approve
-            ) {
-              this.formNotApprove.push(element);
-            } else if (
               element.acception.teacher.accept &&
-              !element.acception.teacher.approve
+              element.acception.doyen.accept
             ) {
-              this.formNotApprove.push(element);
-            } else if (
-              element.acception.doyen.accept &&
-              !element.acception.doyen.approve
-            ) {
-              this.formNotApprove.push(element);
+              if (
+                element.acception.advisor.approve &&
+                element.acception.staff.approve &&
+                element.acception.teacher.approve &&
+                element.acception.doyen.approve
+              ) {
+                if (!element.pay_money_state)
+                  this.formAllApprove.push(element);
+                if (element.pay_money_state) {
+                  this.formWaitPayment.push(element);
+                }
+              } else {
+                this.formNotApprove.push(element);
+              }
             } else {
-              this.formWaitAccept.push(element);
+              if (
+                element.acception.advisor.accept &&
+                !element.acception.advisor.approve
+              ) {
+                this.formNotApprove.push(element);
+              } else if (
+                element.acception.staff.accept &&
+                !element.acception.staff.approve
+              ) {
+                this.formNotApprove.push(element);
+              } else if (
+                element.acception.teacher.accept &&
+                !element.acception.teacher.approve
+              ) {
+                this.formNotApprove.push(element);
+              } else if (
+                element.acception.doyen.accept &&
+                !element.acception.doyen.approve
+              ) {
+                this.formNotApprove.push(element);
+              } else {
+                this.formWaitAccept.push(element);
+              }
             }
+          } else {
+            this.formUnseen.push(element);
           }
         } else {
-          this.formUnseen.push(element);
+          if (element.form_status) {
+            this.formFinish.push(element);
+          } else if (element.pay_money) {
+            this.formWaitCheckPayment.push(element);
+          } 
+          // else if (element.pay_money_state) {
+          //   this.formWaitPayment.push(element);
+          // }
         }
       });
-      this.formData.forEach((element) => {
-        if (element.form_status) {
-          this.formFinish.push(element);
-        }
-        if (element.pay_money) {
-          this.formWaitCheckPayment.push(element);
-        }
-        if (element.pay_money_state) {
-          this.formWaitPayment.push(element);
-        }
-      });
+
       this.loading = false;
     },
     goViewForm() {
@@ -323,7 +331,7 @@ export default {
     },
     async completeForm(form) {
       form.form_status = true;
-      
+
       await axios.put(
         "https://cs264-backend-project.herokuapp.com/api/enroll/updateEnrollForm",
         {
@@ -333,7 +341,22 @@ export default {
           },
         }
       );
-    }
+      this.$router.push('/staff/dashboard');
+    },
+    async goPayment(form) {
+      form.pay_money_state = true;
+
+      await axios.put(
+        "https://cs264-backend-project.herokuapp.com/api/enroll/updateEnrollForm",
+        {
+          params: {
+            id: form,
+            form: form,
+          },
+        }
+      );
+      this.$forceUpdate();
+    },
   },
   mounted() {
     this.fetchAllForm();
