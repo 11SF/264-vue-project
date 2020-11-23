@@ -6,13 +6,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userData: {
-      status: ""
+      status: "",
     },
-     session_login: ""
+    session_login: "",
+    form_id_for_employee: "asdasd",
+    staff_menu: ""
   },
   mutations: {
-    
+    updata_session() {
+      this.session_login = this.$session.get("login_session");
+    },
   },
   actions: {},
-  modules: {}
+  modules: {},
 });

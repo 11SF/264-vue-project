@@ -1,37 +1,48 @@
 <template>
-  <div id="app">
+  <v-app>
     <Navbar />
-    <div class="content">
+    <v-content class="content">
       <router-view />
-    </div>
-  </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
+// import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar.vue';
+// import NavigationDrawer from "./components/NavigationDrawer";
 
-import Navbar from "./components/Navbar"
 export default {
+  name: "App",
+
   components: {
     Navbar
-  }
-  
-}
+    // NavigationDrawer,
+    // Footer
+  },
+  data() {
+    return {
+      drawer: false,
+      couter: 0,
+    };
+  },
+  methods: {
+    toggle() {
+      this.drawer = !this.drawer;
+    },
+    reset() {
+      this.drawer = false;
+    },
+  },
+};
 </script>
-<style>
-#app {
-  font-family: 'Kanit', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+<style >
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap");
+* {
+  font-family: "Kanit", sans-serif;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.content {
+  margin: 55px 0 0 0;
 }
 </style>
