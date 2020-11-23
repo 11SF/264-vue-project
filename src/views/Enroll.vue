@@ -42,7 +42,7 @@
             </v-card>
           </v-dialog>
         </v-row>
-        <v-row justify="end" >
+        <v-row justify="end" v-if="$store.state.session_login['type'] == 'employee'">
           <v-col cols="12" sm="4" align-self="center">
             <v-select
               :items="item_employee"

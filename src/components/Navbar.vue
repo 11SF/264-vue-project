@@ -106,7 +106,7 @@ export default {
           link: this.goProfile,
         },
         {
-          title: "ดำเนินการลงทะเบียนล้าช้า",
+          title: "ดำเนินการลงทะเบียนล่าช้า",
           icon: "mdi-pencil-plus",
           link: this.goEnroll,
         },

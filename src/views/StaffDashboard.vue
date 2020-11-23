@@ -1,25 +1,28 @@
 <template>
   <v-row class="container-row">
-    <v-col cols="12" sm="2">
+    <v-col cols="12" sm="12" lg="2">
       <v-card
         color="light-blue"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formData), (titleDisplay = 'ใบคำร้องลงทะเบียนทั้งหมด')
         "
       >
-        <v-card-title class="text-right">ใบคำร้องลงทะเบียนทั้งหมด</v-card-title>
+        <v-card-title class="text-right ">ใบคำร้องลงทะเบียนทั้งหมด</v-card-title>
         <v-card-text>
-          <h2>{{ formData.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formData.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="4">
+    <v-col cols="12" sm="12" lg="4" fill-height>
       <v-card
         color="blue-grey"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formUnseen),
             (titleDisplay = 'ใบคำร้องที่ยังไม่ตรวจ'),
@@ -28,15 +31,17 @@
       >
         <v-card-title class="text-right">ใบคำร้องที่ยังไม่ตรวจ</v-card-title>
         <v-card-text>
-          <h2>{{ formUnseen.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formUnseen.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="2">
+    <v-col cols="12" sm="12" lg="2" >
       <v-card
         color="yellow darken-1"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formWaitAccept),
             (titleDisplay = 'ใบคำร้องที่รอการอนุมัติ')
@@ -44,15 +49,17 @@
       >
         <v-card-title class="text-right">ใบคำร้องที่รอการอนุมัติ</v-card-title>
         <v-card-text>
-          <h2>{{ formWaitAccept.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formWaitAccept.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="2">
+    <v-col cols="12" sm="12" lg="2">
       <v-card
         color="red"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formNotApprove),
             (titleDisplay = 'ใบคำร้องที่ไม่ผ่านการอนุมัติ')
@@ -62,15 +69,17 @@
           >ใบคำร้องที่ไม่ผ่านการอนุมัติ</v-card-title
         >
         <v-card-text>
-          <h2>{{ formNotApprove.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formNotApprove.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="2">
+    <v-col cols="12" sm="12" lg="2">
       <v-card
         color="success"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formAllApprove),
             (titleDisplay = 'ใบคำร้องที่ผ่านการอนุมัติ')
@@ -80,30 +89,34 @@
           >ใบคำร้องที่ผ่านการอนุมัติ</v-card-title
         >
         <v-card-text>
-          <h2>{{ formAllApprove.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formAllApprove.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="4">
+    <v-col cols="12" sm="12" lg="4">
       <v-card
         color="cyan"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formWaitPayment), (titleDisplay = 'รอการชำระเงิน')
         "
       >
         <v-card-title class="text-right">รอการชำระเงิน</v-card-title>
         <v-card-text>
-          <h2>{{ formWaitPayment.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formWaitPayment.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="5">
+    <v-col cols="12" sm="12" lg="5">
       <v-card
         color="indigo"
         dark
         link
+        height="100%"
         @click="
           (formDisplay = formWaitCheckPayment),
             (titleDisplay = 'รอเจ้าหน้าที่ยืนยันการชำระเงิน')
@@ -113,20 +126,23 @@
           >รอเจ้าหน้าที่ยืนยันการชำระเงิน</v-card-title
         >
         <v-card-text>
-          <h2>{{ formWaitCheckPayment.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formWaitCheckPayment.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="3">
+    <v-col cols="12" sm="12" lg="3">
       <v-card
         color="success"
         dark
         link
+        height="100%"
         @click="(formDisplay = formFinish), (titleDisplay = 'เสร็จสิ้น')"
       >
         <v-card-title class="text-right">เสร็จสิ้น</v-card-title>
         <v-card-text>
-          <h2>{{ formFinish.length }}</h2>
+          <h2 v-if="loading == true">Loading...</h2>
+          <h2 v-else>{{ formFinish.length }}</h2>
         </v-card-text>
       </v-card>
     </v-col>
@@ -187,6 +203,7 @@
 
 <script>
 import axios from "axios";
+// import loadingC from "../components/Loading2"
 export default {
   name: "StaffDashboardS",
   data() {
@@ -202,11 +219,12 @@ export default {
       formDisplay: null,
       titleDisplay: null,
       lastSelect: "",
+      loading: null
     };
   },
   methods: {
     async fetchAllForm() {
-      this.formData = "Loading...";
+      this.loading = true
       let res = await axios.get(
         "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
         {
@@ -259,6 +277,7 @@ export default {
           this.formWaitPayment.push(element);
         }
       });
+      this.loading = false
     },
     goViewForm() {
       this.$router.push("/viewform");
@@ -270,6 +289,9 @@ export default {
   mounted() {
     this.fetchAllForm();
   },
+  components: {
+    // loadingC
+  }
 };
 </script>
 

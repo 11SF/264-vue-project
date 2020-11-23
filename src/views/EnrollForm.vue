@@ -156,6 +156,16 @@
               </v-textarea>
             </v-col>
           </v-row>
+          <v-row justify-lg="end" justify-md="center">
+            <v-col cols="12" lg="6">
+              <v-file-input
+                chips
+                multiple
+                accept=".pdf"
+                label="แนบไฟล์หลักฐาน (.pdf)"
+              ></v-file-input>
+            </v-col>
+          </v-row>
           <v-row justify="end">
             <v-btn color="green" @click="saveForm()" dark>ยืนยันข้อมูล</v-btn>
           </v-row>

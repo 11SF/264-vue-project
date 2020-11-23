@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="login-wrapper">
-      <form>
+    <div class="login-wrapper" @keyup.enter="authAPI()">
+      <!-- <form> -->
         <div class="form-group">
           <h3>เข้าสู่ระบบ (นักศึกษา/บุคคลากร)</h3>
         </div>
@@ -37,7 +37,7 @@
           <Loading v-if="inprocess == true" />
           Submit
         </button>
-      </form>
+      <!-- </form> -->
     </div>
   </div>
 </template>
@@ -126,7 +126,8 @@ export default {
   padding: 0px;
 }
 .login-wrapper {
-  display: flex;
+  display: block;
+  
   align-items: center;
   max-width: 620px;
   height: 450px;
