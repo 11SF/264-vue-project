@@ -10,7 +10,7 @@
           (formDisplay = formData), (titleDisplay = 'ใบคำร้องลงทะเบียนทั้งหมด')
         "
       >
-        <v-card-title class="text-right ">ใบคำร้องลงทะเบียนทั้งหมด</v-card-title>
+        <v-card-title class="text-right">ใบคำร้องลงทะเบียนทั้งหมด</v-card-title>
         <v-card-text>
           <h2 v-if="loading == true">Loading...</h2>
           <h2 v-else>{{ formData.length }}</h2>
@@ -36,7 +36,7 @@
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col cols="12" sm="12" lg="2" >
+    <v-col cols="12" sm="12" lg="2">
       <v-card
         color="yellow darken-1"
         dark
@@ -171,6 +171,25 @@
               <v-row>
                 <v-col cols="6" sm="2">
                   <v-btn
+                    color="green"
+                    dark
+                    @click="
+                      goViewProcess(),
+                        ($store.state.form_id_for_employee = form)
+                    "
+                  >
+                    ตรวจสอบสถานะ
+                  </v-btn>
+                </v-col>
+                <v-col
+                  cols="6"
+                  sm="2"
+                  v-if="
+                    titleDisplay == 'ใบคำร้องที่ยังไม่ตรวจ' ||
+                    titleDisplay == 'ใบคำร้องที่รอการอนุมัติ'
+                  "
+                >
+                  <v-btn
                     color="primary"
                     dark
                     @click="
@@ -180,18 +199,21 @@
                     ตรวจสอบใบคำร้อง
                   </v-btn>
                 </v-col>
-                <v-col cols="6" sm="2">
-                      <v-btn
-                        color="green"
-                        dark
-                        @click="
-                          goViewProcess(),
-                            ($store.state.form_id_for_employee = form)
-                        "
-                      >
-                        ตรวจสอบสถานะ
-                      </v-btn>
-                    </v-col>
+                <v-col
+                  cols="6"
+                  sm="2"
+                  v-if="titleDisplay == 'ใบคำร้องที่ไม่ผ่านการอนุมัติ'"
+                >
+                  <v-btn
+                    color="red"
+                    dark
+                    @click="
+                      completeForm(form)
+                    "
+                  >
+                    เสร็จสิ้นคำร้อง
+                  </v-btn>
+                </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -219,12 +241,12 @@ export default {
       formDisplay: null,
       titleDisplay: null,
       lastSelect: "",
-      loading: null
+      loading: null,
     };
   },
   methods: {
     async fetchAllForm() {
-      this.loading = true
+      this.loading = true;
       let res = await axios.get(
         "https://cs264-backend-project.herokuapp.com/api/enroll/getEnrollForm",
         {
@@ -245,16 +267,30 @@ export default {
               element.acception.advisor.approve &&
               element.acception.staff.approve &&
               element.acception.teacher.approve &&
-              element.acception.doyen.approve &&
-              !element.pay_money_state
+              element.acception.doyen.approve
             ) {
               this.formAllApprove.push(element);
+            } else {
+              this.formNotApprove.push(element);
             }
           } else {
             if (
-              !element.acception.advisor.approve &&
-              !element.acception.staff.approve &&
-              !element.acception.teacher.approve &&
+              element.acception.advisor.accept &&
+              !element.acception.advisor.approve
+            ) {
+              this.formNotApprove.push(element);
+            } else if (
+              element.acception.staff.accept &&
+              !element.acception.staff.approve
+            ) {
+              this.formNotApprove.push(element);
+            } else if (
+              element.acception.teacher.accept &&
+              !element.acception.teacher.approve
+            ) {
+              this.formNotApprove.push(element);
+            } else if (
+              element.acception.doyen.accept &&
               !element.acception.doyen.approve
             ) {
               this.formNotApprove.push(element);
@@ -277,7 +313,7 @@ export default {
           this.formWaitPayment.push(element);
         }
       });
-      this.loading = false
+      this.loading = false;
     },
     goViewForm() {
       this.$router.push("/viewform");
@@ -285,13 +321,26 @@ export default {
     goViewProcess() {
       this.$router.push("/viewprocess");
     },
+    async completeForm(form) {
+      form.form_status = true;
+      
+      await axios.put(
+        "https://cs264-backend-project.herokuapp.com/api/enroll/updateEnrollForm",
+        {
+          params: {
+            id: form,
+            form: form,
+          },
+        }
+      );
+    }
   },
   mounted() {
     this.fetchAllForm();
   },
   components: {
     // loadingC
-  }
+  },
 };
 </script>
 

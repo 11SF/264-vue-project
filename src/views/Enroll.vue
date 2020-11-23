@@ -19,7 +19,7 @@
             </template>
             <v-card>
               <v-card-title class="mb-10">
-                <span class="headline">ข้อกำหนดในการลงทะเบียนล้าช้า</span>
+                <span class="headline">ข้อกำหนดในการลงทะเบียนล่าช้า</span>
               </v-card-title>
               <v-card-text>
                 <h5 v-for="rule in enrollRules" :key="rule">

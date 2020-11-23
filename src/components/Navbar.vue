@@ -71,9 +71,9 @@
             class="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdown"
           >
-            <a class="dropdown-item">
+            <!-- <a class="dropdown-item">
               <strong>Register</strong>
-            </a>
+            </a> -->
             <a @click="logOut" class="dropdown-item">
               <!-- <div class="dropdown-divider"></div> -->
               <strong>Logout</strong>

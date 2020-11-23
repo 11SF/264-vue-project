@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container mt-6 pr-sm-10">
 
     <!-- <v-row justify="center" class="mt-5"> -->
-      <v-timeline align-top>
+      <v-timeline :dense="$vuetify.breakpoint.smAndDown" align-top>
         <v-timeline-item fill-dot icon="mdi-checkbox-multiple-marked-outline" icon-color="white" color="success">
           <v-alert
             value="true"
@@ -288,6 +288,6 @@ export default {
 <style  scoped>
 .container {
   margin: 0 auto;
-  width: 1080px;
+  max-width: 1080px;
 }
 </style>

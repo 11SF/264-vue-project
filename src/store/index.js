@@ -10,6 +10,7 @@ export default new Vuex.Store({
     },
     session_login: "",
     form_id_for_employee: "asdasd",
+    staff_menu: ""
   },
   mutations: {
     updata_session() {
